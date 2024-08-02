@@ -19,15 +19,13 @@ export const updateSession = async (request: NextRequest) => {
             return request.cookies.get(name)?.value;
           },
           set(name: string, value: string, options: CookieOptions) {
-            request.cookies.set({ name, value, ...options });
-            response.cookies.set({ name, value, ...options });
+            response.cookies.set(name, value, options);
           },
           remove(name: string, options: CookieOptions) {
-            request.cookies.set({ name, value: "", ...options });
-            response.cookies.set({ name, value: "", ...options });
+            response.cookies.set(name, "", options);
           },
         },
-      }
+      },
     );
 
     // Refresh session if expired - required for Server Components
@@ -36,6 +34,7 @@ export const updateSession = async (request: NextRequest) => {
     return response;
   } catch (e) {
     // If there is an error, return the unmodified response
+    console.error("Error in middleware:", e);
     return NextResponse.next({
       request: {
         headers: request.headers,

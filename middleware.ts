@@ -3,39 +3,45 @@ import { createClient } from '@supabase/supabase-js';
 import { updateSession } from '@/utils/supabase/middleware';
 
 export async function middleware(request: NextRequest) {
-  // Update session using your existing function
   const response = await updateSession(request);
-
-  // Create a Supabase client to fetch the session
   const supabase = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
   );
 
   const { data: { session } } = await supabase.auth.getSession();
-  const { pathname } = request.nextUrl;
+  const url = request.nextUrl.clone();
 
-  console.log(`Session: ${session}`);
-  console.log(`Pathname: ${pathname}`);
+  const protectedPaths = [
+    '/dashboard',
+    '/charts',
+    '/gangs',
+    '/input',
+    '/player-stats'
+  ];
 
-  // if (session) {
-  //   // User is authenticated
-  //   if (pathname === '/') {
-  //     console.log('Redirecting to /dashboard');
-  //     return NextResponse.redirect(new URL('/dashboard', request.url));
-  //   }
-  // } else {
-  //   // User is not authenticated
-  //   if (pathname.startsWith('/dashboard')) {
-  //     console.log('Redirecting to /');
-  //     return NextResponse.redirect(new URL('/', request.url));
-  //   }
-  // }
+  if (session) {
+    if (url.pathname === '/') {
+      url.pathname = '/dashboard';
+      return NextResponse.redirect(url);
+    }
+  } else {
+    if (protectedPaths.some(path => url.pathname.startsWith(path))) {
+      url.pathname = '/';
+      return NextResponse.redirect(url);
+    }
+  }
 
   return response;
 }
 
-// Configure middleware matcher
 export const config = {
-  matcher: ['/dashboard', '/'],
+  matcher: [
+    '/((?!_next/static|_next/image|favicon.ico|public).*)',
+    '/dashboard',
+    '/charts',
+    '/gangs',
+    '/input',
+    '/player-stats'
+  ],
 };
