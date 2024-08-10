@@ -20,17 +20,17 @@ export async function middleware(request: NextRequest) {
     '/player-stats'
   ];
 
-  if (session) {
-    if (url.pathname === '/') {
-      url.pathname = '/dashboard';
-      return NextResponse.redirect(url);
-    }
-  } else {
-    if (protectedPaths.some(path => url.pathname.startsWith(path))) {
-      url.pathname = '/';
-      return NextResponse.redirect(url);
-    }
-  }
+  // if (session) {
+  //   if (url.pathname === '/') {
+  //     url.pathname = '/dashboard';
+  //     return NextResponse.redirect(url);
+  //   }
+  // } else {
+  //   if (protectedPaths.some(path => url.pathname.startsWith(path))) {
+  //     url.pathname = '/';
+  //     return NextResponse.redirect(url);
+  //   }
+  // }
 
   return response;
 }

@@ -3,7 +3,7 @@ import React from 'react';
 const About: React.FC = () => {
   return (
     <div
-      className="relative hero min-h-screen"
+      className="relative hero min-h-screen overflow-hidden"
       style={{
         backgroundImage: "url('/images/hero-bg.png')",
       }}
