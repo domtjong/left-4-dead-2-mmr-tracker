@@ -64,6 +64,13 @@ export default function NewMatchForm({
   const inputCls =
     "w-full rounded-lg border border-white/10 bg-black/30 px-3 py-2 text-sm text-white placeholder:text-white/30 outline-none transition focus:border-l4d2-purple/60 focus:ring-1 focus:ring-l4d2-purple/40";
 
+  // Names already chosen anywhere in the match, so each slot can drop them from
+  // its own suggestion list (like the matchup preview on the home page). Kept as
+  // a datalist — not a strict combobox — so a brand-new name still adds a guest.
+  const chosen = new Set(
+    [...winners, ...losers].map((n) => n.trim().toLowerCase()).filter(Boolean),
+  );
+
   const TeamColumn = ({
     title,
     side,
@@ -77,17 +84,30 @@ export default function NewMatchForm({
   }) => (
     <div className="flex-1 space-y-3">
       <div className={cn("text-xs font-semibold uppercase tracking-widest", accent)}>{title}</div>
-      {SLOTS.map((i) => (
-        <input
-          key={i}
-          list="player-list"
-          value={names[i]}
-          onChange={(e) => setName(side, i, e.target.value)}
-          placeholder={`Player ${i + 1}`}
-          className={inputCls}
-          autoComplete="off"
-        />
-      ))}
+      {SLOTS.map((i) => {
+        // Everyone taken except this slot's own current pick.
+        const taken = new Set(chosen);
+        taken.delete(names[i].trim().toLowerCase());
+        const options = players.filter((p) => !taken.has(p.toLowerCase()));
+        const listId = `player-list-${side}-${i}`;
+        return (
+          <div key={i}>
+            <input
+              list={listId}
+              value={names[i]}
+              onChange={(e) => setName(side, i, e.target.value)}
+              placeholder={`Player ${i + 1}`}
+              className={inputCls}
+              autoComplete="off"
+            />
+            <datalist id={listId}>
+              {options.map((p) => (
+                <option key={p} value={p} />
+              ))}
+            </datalist>
+          </div>
+        );
+      })}
     </div>
   );
 
@@ -100,12 +120,6 @@ export default function NewMatchForm({
         </p>
       </CardHeader>
       <CardContent className="space-y-6">
-        <datalist id="player-list">
-          {players.map((p) => (
-            <option key={p} value={p} />
-          ))}
-        </datalist>
-
         <div className="flex flex-col gap-6 sm:flex-row">
           <TeamColumn title="Winners" side="w" names={winners} accent="text-emerald-400" />
           <div className="hidden w-px self-stretch bg-white/10 sm:block" />
