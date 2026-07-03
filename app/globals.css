@@ -158,6 +158,35 @@
     animation: slideFromLeft 0.28s ease-out;
   }
 
+  /* Expand/collapse for a single mounted row panel (match history / recent).
+     Only the open row is in the DOM, so animating its grid row is cheap. */
+  @keyframes rowExpand {
+    from {
+      grid-template-rows: 0fr;
+      opacity: 0;
+    }
+    to {
+      grid-template-rows: 1fr;
+      opacity: 1;
+    }
+  }
+  @keyframes rowCollapse {
+    from {
+      grid-template-rows: 1fr;
+      opacity: 1;
+    }
+    to {
+      grid-template-rows: 0fr;
+      opacity: 0;
+    }
+  }
+  .animate-row-expand {
+    animation: rowExpand 0.26s ease-out forwards;
+  }
+  .animate-row-collapse {
+    animation: rowCollapse 0.22s ease-in forwards;
+  }
+
   /* Slim purple scrollbar */
   * {
     scrollbar-width: thin;

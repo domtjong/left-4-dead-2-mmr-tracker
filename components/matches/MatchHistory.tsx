@@ -49,9 +49,121 @@ function DeltaRows({ players }: { players: HistoryPlayer[] }) {
   );
 }
 
+/**
+ * One history row. Owns its own open/closing phase so the expanded panel is
+ * only in the DOM while open — keeps the long scroll list cheap to lay out and
+ * the animation smooth (only the open row's grid row animates).
+ */
+function MatchRow({
+  m,
+  onRequestDelete,
+}: {
+  m: HistoryMatch;
+  onRequestDelete: (id: string) => void;
+}) {
+  const [phase, setPhase] = useState<"closed" | "open" | "closing">("closed");
+  const mounted = phase !== "closed";
+  const isOpen = phase === "open";
+
+  return (
+    <div>
+      <button
+        type="button"
+        onClick={() => setPhase((p) => (p === "closed" ? "open" : "closing"))}
+        className="grid w-full grid-cols-[92px_1fr_auto] items-center gap-3 px-4 py-3 text-left transition hover:bg-white/[0.03]"
+      >
+        <span className="text-xs tabular-nums text-white/40">{m.date}</span>
+        <span className="flex items-center gap-2 truncate text-sm">
+          <Team players={m.winners} won />
+          <span className="text-white/25">vs</span>
+          <Team players={m.losers} won={false} />
+        </span>
+        <span className="flex items-center gap-3">
+          <span className="hidden text-xs uppercase tracking-wide text-white/40 sm:inline">
+            {m.map}
+          </span>
+          <ChevronDown
+            size={16}
+            className={cn("text-white/40 transition", isOpen && "rotate-180")}
+          />
+        </span>
+      </button>
+
+      {mounted && (
+        <div
+          className={cn(
+            "grid",
+            phase === "closing" ? "animate-row-collapse" : "animate-row-expand",
+          )}
+          onAnimationEnd={(e) => {
+            if (e.currentTarget === e.target && phase === "closing") setPhase("closed");
+          }}
+        >
+          <div className="min-h-0 overflow-hidden">
+            <div className="bg-black/20 px-4 py-4">
+              {/* Match summary: score + pre-game win chance of each side */}
+              <div className="mb-3 flex flex-wrap items-center gap-x-6 gap-y-1 text-xs">
+                {m.winScore !== null && m.loseScore !== null && (
+                  <span className="text-white/60">
+                    Score{" "}
+                    <span className="font-semibold text-emerald-400">{m.winScore}</span>
+                    <span className="text-white/30"> – </span>
+                    <span className="font-semibold text-red-400">{m.loseScore}</span>
+                  </span>
+                )}
+                <span className="text-white/50">
+                  Win chance{" "}
+                  <span className="text-emerald-400">{m.winnerPct}%</span>
+                  <span className="text-white/30"> / </span>
+                  <span className="text-red-400">{m.loserPct}%</span>
+                </span>
+                {m.note && <span className="italic text-white/40">“{m.note}”</span>}
+              </div>
+
+              <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+                <div>
+                  <div className="mb-2 flex items-baseline justify-between">
+                    <span className="text-xs font-semibold uppercase tracking-widest text-emerald-400">
+                      Winners
+                    </span>
+                    <span className="text-xs text-white/40">
+                      total {m.winnerMmr} · avg {m.winnerAvg}
+                    </span>
+                  </div>
+                  <DeltaRows players={m.winners} />
+                </div>
+                <div>
+                  <div className="mb-2 flex items-baseline justify-between">
+                    <span className="text-xs font-semibold uppercase tracking-widest text-red-400">
+                      Losers
+                    </span>
+                    <span className="text-xs text-white/40">
+                      total {m.loserMmr} · avg {m.loserAvg}
+                    </span>
+                  </div>
+                  <DeltaRows players={m.losers} />
+                </div>
+              </div>
+              <div className="mt-3 flex items-center justify-between gap-3">
+                <span className="text-xs text-white/30 sm:hidden">Map: {m.map}</span>
+                <button
+                  type="button"
+                  onClick={() => onRequestDelete(m.id)}
+                  className="ml-auto flex items-center gap-1.5 rounded-lg border border-red-500/20 px-2.5 py-1.5 text-xs text-red-400 transition hover:bg-red-500/10 hover:text-red-300"
+                >
+                  <Trash2 size={13} /> Delete match
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
 export default function MatchHistory({ matches }: { matches: HistoryMatch[] }) {
   const router = useRouter();
-  const [open, setOpen] = useState<Set<string>>(new Set());
   const [player, setPlayer] = useState("");
   const [map, setMap] = useState("");
   const [confirmId, setConfirmId] = useState<string | null>(null);
@@ -66,11 +178,6 @@ export default function MatchHistory({ matches }: { matches: HistoryMatch[] }) {
     startTransition(async () => {
       const res = await deleteMatch(confirmId);
       if (res.ok) {
-        setOpen((prev) => {
-          const next = new Set(prev);
-          next.delete(confirmId);
-          return next;
-        });
         setConfirmId(null);
         router.refresh();
       } else {
@@ -100,13 +207,6 @@ export default function MatchHistory({ matches }: { matches: HistoryMatch[] }) {
       }),
     [matches, q, map],
   );
-
-  const toggle = (id: string) =>
-    setOpen((prev) => {
-      const next = new Set(prev);
-      next.has(id) ? next.delete(id) : next.add(id);
-      return next;
-    });
 
   const clear = () => {
     setPlayer("");
@@ -168,102 +268,16 @@ export default function MatchHistory({ matches }: { matches: HistoryMatch[] }) {
 
       {/* Scrollable list */}
       <div className="divide-y divide-white/5 overflow-y-auto">
-        {filtered.map((m) => {
-          const isOpen = open.has(m.id);
-          return (
-            <div key={m.id}>
-              <button
-                type="button"
-                onClick={() => toggle(m.id)}
-                className="grid w-full grid-cols-[92px_1fr_auto] items-center gap-3 px-4 py-3 text-left transition hover:bg-white/[0.03]"
-              >
-                <span className="text-xs tabular-nums text-white/40">{m.date}</span>
-                <span className="flex items-center gap-2 truncate text-sm">
-                  <Team players={m.winners} won />
-                  <span className="text-white/25">vs</span>
-                  <Team players={m.losers} won={false} />
-                </span>
-                <span className="flex items-center gap-3">
-                  <span className="hidden text-xs uppercase tracking-wide text-white/40 sm:inline">
-                    {m.map}
-                  </span>
-                  <ChevronDown
-                    size={16}
-                    className={cn("text-white/40 transition", isOpen && "rotate-180")}
-                  />
-                </span>
-              </button>
-
-              <div
-                className={cn(
-                  "grid transition-[grid-template-rows] duration-300 ease-out",
-                  isOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]",
-                )}
-              >
-                <div className="overflow-hidden">
-                <div className="bg-black/20 px-4 py-4">
-                  {/* Match summary: score + pre-game win chance of each side */}
-                  <div className="mb-3 flex flex-wrap items-center gap-x-6 gap-y-1 text-xs">
-                    {m.winScore !== null && m.loseScore !== null && (
-                      <span className="text-white/60">
-                        Score{" "}
-                        <span className="font-semibold text-emerald-400">{m.winScore}</span>
-                        <span className="text-white/30"> – </span>
-                        <span className="font-semibold text-red-400">{m.loseScore}</span>
-                      </span>
-                    )}
-                    <span className="text-white/50">
-                      Win chance{" "}
-                      <span className="text-emerald-400">{m.winnerPct}%</span>
-                      <span className="text-white/30"> / </span>
-                      <span className="text-red-400">{m.loserPct}%</span>
-                    </span>
-                    {m.note && <span className="italic text-white/40">“{m.note}”</span>}
-                  </div>
-
-                  <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
-                    <div>
-                      <div className="mb-2 flex items-baseline justify-between">
-                        <span className="text-xs font-semibold uppercase tracking-widest text-emerald-400">
-                          Winners
-                        </span>
-                        <span className="text-xs text-white/40">
-                          total {m.winnerMmr} · avg {m.winnerAvg}
-                        </span>
-                      </div>
-                      <DeltaRows players={m.winners} />
-                    </div>
-                    <div>
-                      <div className="mb-2 flex items-baseline justify-between">
-                        <span className="text-xs font-semibold uppercase tracking-widest text-red-400">
-                          Losers
-                        </span>
-                        <span className="text-xs text-white/40">
-                          total {m.loserMmr} · avg {m.loserAvg}
-                        </span>
-                      </div>
-                      <DeltaRows players={m.losers} />
-                    </div>
-                  </div>
-                  <div className="mt-3 flex items-center justify-between gap-3">
-                    <span className="text-xs text-white/30 sm:hidden">Map: {m.map}</span>
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setErr(null);
-                        setConfirmId(m.id);
-                      }}
-                      className="ml-auto flex items-center gap-1.5 rounded-lg border border-red-500/20 px-2.5 py-1.5 text-xs text-red-400 transition hover:bg-red-500/10 hover:text-red-300"
-                    >
-                      <Trash2 size={13} /> Delete match
-                    </button>
-                  </div>
-                </div>
-                </div>
-              </div>
-            </div>
-          );
-        })}
+        {filtered.map((m) => (
+          <MatchRow
+            key={m.id}
+            m={m}
+            onRequestDelete={(id) => {
+              setErr(null);
+              setConfirmId(id);
+            }}
+          />
+        ))}
 
         {filtered.length === 0 && (
           <div className="px-4 py-10 text-center text-sm text-white/40">
