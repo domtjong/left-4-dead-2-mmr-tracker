@@ -256,17 +256,20 @@ export default async function Index() {
           hint={topWinRate ? `${topWinRate.name} · ${topWinRate.games}g` : `min ${20} games`}
           icon={Target}
         />
-        <MapCarousel slides={mapSlides} />
-      </section>
-
-      {/* Matchup preview: MMR at stake before logging */}
-      <section className="mt-6">
-        <MatchupPreview players={roster} />
+        {/* Content-rich: full width on phone (2 cols) so names don't clip. */}
+        <div className="col-span-2 lg:col-span-1">
+          <MapCarousel slides={mapSlides} />
+        </div>
       </section>
 
       {/* Squad synergy: best/worst duos, trios, quads */}
       <section className="mt-6">
         <SquadSynergy squads={squads} />
+      </section>
+
+      {/* Matchup preview: MMR at stake before logging */}
+      <section className="mt-6">
+        <MatchupPreview players={roster} />
       </section>
 
       {/* Chart + recent matches */}

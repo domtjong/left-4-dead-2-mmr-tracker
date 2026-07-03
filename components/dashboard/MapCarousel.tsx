@@ -54,7 +54,7 @@ export default function MapCarousel({ slides }: { slides: MapSlide[] }) {
             <ChevronLeft size={18} />
           </button>
           <div key={i} className={cn(anim, "min-w-0 flex-1 text-center")}>
-            <div className="truncate font-display text-lg font-bold tracking-tight text-white">
+            <div className="font-display text-base font-bold leading-tight tracking-tight text-balance text-white sm:text-lg">
               {s.map}
             </div>
           </div>
@@ -72,7 +72,7 @@ export default function MapCarousel({ slides }: { slides: MapSlide[] }) {
           {s.best && (
             <div className="flex items-center justify-between gap-2">
               <span className="text-white/50">Best</span>
-              <span className="truncate font-medium text-emerald-400">
+              <span className="text-right font-medium text-emerald-400">
                 {s.best.name} {s.best.pct}%{" "}
                 <span className="text-white/30">({s.best.games}g)</span>
               </span>
@@ -81,7 +81,7 @@ export default function MapCarousel({ slides }: { slides: MapSlide[] }) {
           {s.worst && s.worst.name !== s.best?.name && (
             <div className="flex items-center justify-between gap-2">
               <span className="text-white/50">Worst</span>
-              <span className="truncate font-medium text-red-400">
+              <span className="text-right font-medium text-red-400">
                 {s.worst.name} {s.worst.pct}%{" "}
                 <span className="text-white/30">({s.worst.games}g)</span>
               </span>
