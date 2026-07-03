@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { createClient } from "@/utils/supabase/server";
 import { applyMatch, BASE_MMR, type PlayerRating } from "@/lib/mmr";
 import { MAPS } from "@/lib/l4d2";
+import { logEvent, logError } from "@/lib/log";
 
 export type LogMatchInput = {
   winners: string[]; // 4 player names
@@ -24,14 +25,27 @@ export async function logMatch(input: LogMatchInput): Promise<LogMatchResult> {
   const losers = input.losers.map((n) => n.trim().toLowerCase());
   const all = [...winners, ...losers];
 
+  logEvent("match.new.request", {
+    map: input.map,
+    playedAt: input.playedAt ?? null,
+    winners,
+    losers,
+    winScore: input.winScore ?? null,
+    loseScore: input.loseScore ?? null,
+    note: input.note?.trim() || null,
+  });
+
   // --- validation ---
   if (all.length !== 8 || all.some((n) => !n)) {
+    logEvent("match.new.rejected", { reason: "missing_players" });
     return { ok: false, error: "Need all 8 players filled in." };
   }
   if (new Set(all).size !== 8) {
+    logEvent("match.new.rejected", { reason: "duplicate_player", all });
     return { ok: false, error: "A player can't appear twice in one match." };
   }
   if (!MAPS.includes(input.map as (typeof MAPS)[number])) {
+    logEvent("match.new.rejected", { reason: "invalid_map", map: input.map });
     return { ok: false, error: "Pick a valid map." };
   }
 
@@ -42,7 +56,10 @@ export async function logMatch(input: LogMatchInput): Promise<LogMatchResult> {
     .from("players")
     .select("id, name, current_mmr")
     .in("name", all);
-  if (pErr) return { ok: false, error: pErr.message };
+  if (pErr) {
+    logError("match.new", pErr, { step: "load_players" });
+    return { ok: false, error: pErr.message };
+  }
 
   const byName = new Map(existing?.map((p) => [p.name, p]) ?? []);
   const unknown = all.filter((n) => !byName.has(n));
@@ -51,8 +68,12 @@ export async function logMatch(input: LogMatchInput): Promise<LogMatchResult> {
       .from("players")
       .insert(unknown.map((name) => ({ name, current_mmr: BASE_MMR, is_guest: true })))
       .select("id, name, current_mmr");
-    if (cErr) return { ok: false, error: cErr.message };
+    if (cErr) {
+      logError("match.new", cErr, { step: "create_guests", names: unknown });
+      return { ok: false, error: cErr.message };
+    }
     created?.forEach((p) => byName.set(p.name, p));
+    logEvent("player.guest.created", { names: unknown });
   }
 
   const rate = (name: string): PlayerRating => {
@@ -78,7 +99,10 @@ export async function logMatch(input: LogMatchInput): Promise<LogMatchResult> {
     })
     .select("id")
     .single();
-  if (mErr || !match) return { ok: false, error: mErr?.message ?? "Failed to create match." };
+  if (mErr || !match) {
+    logError("match.new", mErr ?? "insert returned no row", { step: "insert_match" });
+    return { ok: false, error: mErr?.message ?? "Failed to create match." };
+  }
 
   const { error: mpErr } = await db.from("match_players").insert(
     results.map((r) => ({
@@ -90,7 +114,10 @@ export async function logMatch(input: LogMatchInput): Promise<LogMatchResult> {
       delta: r.delta,
     })),
   );
-  if (mpErr) return { ok: false, error: mpErr.message };
+  if (mpErr) {
+    logError("match.new", mpErr, { step: "insert_match_players", matchId: match.id });
+    return { ok: false, error: mpErr.message };
+  }
 
   const updates = await Promise.all(
     results.map((r) =>
@@ -98,13 +125,26 @@ export async function logMatch(input: LogMatchInput): Promise<LogMatchResult> {
     ),
   );
   const updateErr = updates.find((u) => u.error)?.error;
-  if (updateErr) return { ok: false, error: updateErr.message };
+  if (updateErr) {
+    logError("match.new", updateErr, { step: "update_ratings", matchId: match.id });
+    return { ok: false, error: updateErr.message };
+  }
 
   revalidatePath("/");
   revalidatePath("/stats");
   revalidatePath("/chart");
 
   const names = [...winners, ...losers];
+  logEvent("match.new.created", {
+    matchId: match.id,
+    map: input.map,
+    winners,
+    losers,
+    winScore: input.winScore ?? null,
+    loseScore: input.loseScore ?? null,
+    note: input.note?.trim() || null,
+    deltas: results.map((r, i) => ({ name: names[i], side: r.side, delta: r.delta, after: r.mmrAfter })),
+  });
   return {
     ok: true,
     deltas: results.map((r, i) => ({

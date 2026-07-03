@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { createClient } from "@/utils/supabase/server";
 import { applyMatch, BASE_MMR, type PlayerRating, type Side } from "@/lib/mmr";
 import { fetchAllRows } from "@/lib/db";
+import { logEvent, logError } from "@/lib/log";
 
 export type DeleteMatchResult = { ok: true } | { ok: false; error: string };
 
@@ -19,9 +20,33 @@ export type DeleteMatchResult = { ok: true } | { ok: false; error: string };
 export async function deleteMatch(id: string): Promise<DeleteMatchResult> {
   const db = await createClient();
 
+  // Capture what we're deleting so the log shows the match, not just an id.
+  const { data: doomed } = await db
+    .from("matches")
+    .select("id, map, played_at, win_score, lose_score, note, match_players(side, players(name))")
+    .eq("id", id)
+    .single();
+  const roster = (doomed?.match_players ?? []) as unknown as {
+    side: string;
+    players: { name: string } | null;
+  }[];
+  logEvent("match.delete.request", {
+    id,
+    map: doomed?.map ?? null,
+    playedAt: doomed?.played_at ?? null,
+    winScore: doomed?.win_score ?? null,
+    loseScore: doomed?.lose_score ?? null,
+    note: doomed?.note ?? null,
+    winners: roster.filter((r) => r.side === "A").map((r) => r.players?.name),
+    losers: roster.filter((r) => r.side === "B").map((r) => r.players?.name),
+  });
+
   // 1. Remove the match. match_players rows cascade via FK.
   const { error: delErr } = await db.from("matches").delete().eq("id", id);
-  if (delErr) return { ok: false, error: delErr.message };
+  if (delErr) {
+    logError("match.delete", delErr, { id, step: "delete_match" });
+    return { ok: false, error: delErr.message };
+  }
 
   // 2. Load everything needed to replay the remaining log.
   const [matchesRes, mps, playersRes] = await Promise.all([
@@ -83,11 +108,17 @@ export async function deleteMatch(id: string): Promise<DeleteMatchResult> {
 
   // 4. Replace all match_players with the recomputed rows.
   const { error: wipeErr } = await db.from("match_players").delete().not("id", "is", null);
-  if (wipeErr) return { ok: false, error: wipeErr.message };
+  if (wipeErr) {
+    logError("match.delete", wipeErr, { id, step: "wipe_match_players" });
+    return { ok: false, error: wipeErr.message };
+  }
 
   for (let j = 0; j < newRows.length; j += 500) {
     const { error: insErr } = await db.from("match_players").insert(newRows.slice(j, j + 500));
-    if (insErr) return { ok: false, error: insErr.message };
+    if (insErr) {
+      logError("match.delete", insErr, { id, step: "reinsert_match_players" });
+      return { ok: false, error: insErr.message };
+    }
   }
 
   // 5. Write back every player's final rating (resets orphans to base).
@@ -95,10 +126,19 @@ export async function deleteMatch(id: string): Promise<DeleteMatchResult> {
     [...rating].map(([pid, mmr]) => db.from("players").update({ current_mmr: mmr }).eq("id", pid)),
   );
   const upErr = updates.find((u) => u.error)?.error;
-  if (upErr) return { ok: false, error: upErr.message };
+  if (upErr) {
+    logError("match.delete", upErr, { id, step: "update_ratings" });
+    return { ok: false, error: upErr.message };
+  }
 
   revalidatePath("/");
   revalidatePath("/matches");
   revalidatePath("/chart");
+  logEvent("match.delete.done", {
+    id,
+    matchesReplayed: matches.length,
+    rowsWritten: newRows.length,
+    playersUpdated: rating.size,
+  });
   return { ok: true };
 }
