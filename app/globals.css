@@ -32,7 +32,8 @@
     }
 
     .dark {
-      --background: 222.2 84% 4.9%;
+      /* Aligned to l4d2-ink (#131315) so bg-background matches the theme, not navy. */
+      --background: 240 5% 8%;
       --foreground: 210 40% 98%;
       --card: 222.2 84% 4.9%;
       --card-foreground: 210 40% 98%;
@@ -64,6 +65,95 @@
       @apply border-border;
     }
     body {
-      @apply bg-background text-foreground;
+      @apply bg-l4d2-ink text-foreground;
     }
+  }
+
+  @layer components {
+    .l4d2-hero {
+      background:
+        radial-gradient(
+          120% 90% at 85% -10%,
+          rgba(132, 56, 255, 0.22) 0%,
+          rgba(19, 19, 21, 0) 55%
+        ),
+        radial-gradient(
+          90% 70% at 10% 0%,
+          rgba(105, 3, 236, 0.16) 0%,
+          rgba(19, 19, 21, 0) 50%
+        ),
+        linear-gradient(180deg, #120f18 0%, #09090b 60%, #070708 100%);
+    }
+
+    /* Figma smoke texture overlay — faint, concentrated up top, gone by mid-screen */
+    .l4d2-smoke-layer {
+      background-image: url("/l4d2-smoke.png");
+      background-size: cover;
+      background-position: center;
+      opacity: 0.1;
+      mask-image: linear-gradient(to bottom, #000 0%, transparent 55%);
+      -webkit-mask-image: linear-gradient(to bottom, #000 0%, transparent 55%);
+    }
+
+    /* Figma survivor cast key art, anchored bottom; soft fade only near the very top */
+    .l4d2-cast-layer {
+      background-image: url("/l4d2-cast.png");
+      background-repeat: no-repeat;
+      background-position: bottom center;
+      background-size: 100% auto;
+      opacity: 0.15;
+      mask-image: linear-gradient(to top, #000 55%, transparent 92%);
+      -webkit-mask-image: linear-gradient(to top, #000 55%, transparent 92%);
+    }
+
+    /* Faint blueprint grid — confined to the top hero band so it never sits
+       behind the cards/charts (avoids moiré with the charts' own gridlines). */
+    .l4d2-grid {
+      background-image:
+        linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+      background-size: 48px 48px;
+      mask-image: linear-gradient(
+        to bottom,
+        #000 0%,
+        #000 10%,
+        transparent 34%
+      );
+      -webkit-mask-image: linear-gradient(
+        to bottom,
+        #000 0%,
+        #000 10%,
+        transparent 34%
+      );
+    }
+
+  }
+
+  /* Small fade-up used by the map spotlight carousel on slide change */
+  @keyframes cardFadeUp {
+    from {
+      opacity: 0;
+      transform: translateY(6px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+  .animate-card-fade-up {
+    animation: cardFadeUp 0.28s ease-out;
+  }
+
+  /* Slim purple scrollbar */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(132, 56, 255, 0.5) transparent;
+  }
+  *::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  *::-webkit-scrollbar-thumb {
+    background: rgba(132, 56, 255, 0.45);
+    border-radius: 9999px;
   }

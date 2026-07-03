@@ -18,7 +18,16 @@ const config = {
       },
     },
     extend: {
+      fontFamily: {
+        sans: ["var(--font-open-sans)", "system-ui", "sans-serif"],
+        display: ["var(--font-oxanium)", "system-ui", "sans-serif"],
+      },
       colors: {
+        l4d2: {
+          purple: "#8438FF",
+          violet: "#6903EC",
+          ink: "#131315",
+        },
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",

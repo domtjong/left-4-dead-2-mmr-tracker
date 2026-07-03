@@ -1,0 +1,3194 @@
+[
+  {
+    "date": "2021-05-19",
+    "map": "No Mercy",
+    "winners": [
+      "pratik",
+      "alex",
+      "tjong",
+      "daniel"
+    ],
+    "losers": [
+      "jaden",
+      "calvin",
+      "sundeep",
+      "eric"
+    ],
+    "winScore": 3000,
+    "loseScore": 1000,
+    "note": null
+  },
+  {
+    "date": "2021-05-22",
+    "map": "Dead Air",
+    "winners": [
+      "pratik",
+      "alex",
+      "tjong",
+      "emil"
+    ],
+    "losers": [
+      "hwang",
+      "jaden",
+      "calvin",
+      "clarence"
+    ],
+    "winScore": 1746,
+    "loseScore": 1206,
+    "note": null
+  },
+  {
+    "date": "2021-05-23",
+    "map": "Cold Stream",
+    "winners": [
+      "alex",
+      "calvin",
+      "sundeep",
+      "hwang"
+    ],
+    "losers": [
+      "pratik",
+      "eric",
+      "jaden",
+      "mevan"
+    ],
+    "winScore": 2355,
+    "loseScore": 1832,
+    "note": null
+  },
+  {
+    "date": "2021-05-23",
+    "map": "The Last Stand",
+    "winners": [
+      "pratik",
+      "alex",
+      "sundeep",
+      "eric"
+    ],
+    "losers": [
+      "calvin",
+      "jaden",
+      "hwang",
+      "mevan"
+    ],
+    "winScore": 764,
+    "loseScore": 640,
+    "note": null
+  },
+  {
+    "date": "2021-05-24",
+    "map": "Cold Stream",
+    "winners": [
+      "pratik",
+      "alex",
+      "emil",
+      "tjong"
+    ],
+    "losers": [
+      "calvin",
+      "sundeep",
+      "hwang",
+      "jaden"
+    ],
+    "winScore": 1926,
+    "loseScore": 1827,
+    "note": null
+  },
+  {
+    "date": "2021-05-24",
+    "map": "The Passing",
+    "winners": [
+      "pratik",
+      "jaden",
+      "hwang",
+      "alex"
+    ],
+    "losers": [
+      "calvin",
+      "sundeep",
+      "emil",
+      "tjong"
+    ],
+    "winScore": 1047,
+    "loseScore": 959,
+    "note": null
+  },
+  {
+    "date": "2021-05-24",
+    "map": "Dark Carnival",
+    "winners": [
+      "pratik",
+      "daniel",
+      "eric",
+      "hanosh"
+    ],
+    "losers": [
+      "calvin",
+      "mevan",
+      "clarence",
+      "alex"
+    ],
+    "winScore": 3022,
+    "loseScore": 2871,
+    "note": null
+  },
+  {
+    "date": "2021-05-25",
+    "map": "Cold Stream",
+    "winners": [
+      "pratik",
+      "daniel",
+      "hwang",
+      "alex"
+    ],
+    "losers": [
+      "sundeep",
+      "hanosh",
+      "jaden",
+      "eric"
+    ],
+    "winScore": 2703,
+    "loseScore": 1501,
+    "note": null
+  },
+  {
+    "date": "2021-05-25",
+    "map": "The Last Stand",
+    "winners": [
+      "pratik",
+      "daniel",
+      "sundeep",
+      "eric"
+    ],
+    "losers": [
+      "alex",
+      "hwang",
+      "hanosh",
+      "jaden"
+    ],
+    "winScore": 1019,
+    "loseScore": 245,
+    "note": null
+  },
+  {
+    "date": "2021-05-26",
+    "map": "Hard Rain",
+    "winners": [
+      "pratik",
+      "eric",
+      "clarence",
+      "calvin"
+    ],
+    "losers": [
+      "alex",
+      "daniel",
+      "mevan",
+      "jaden"
+    ],
+    "winScore": 2353,
+    "loseScore": 2311,
+    "note": null
+  },
+  {
+    "date": "2021-05-27",
+    "map": "The Sacrifice",
+    "winners": [
+      "pratik",
+      "jaden",
+      "hwang",
+      "emil"
+    ],
+    "losers": [
+      "alex",
+      "eric",
+      "sundeep",
+      "clarence"
+    ],
+    "winScore": 1241,
+    "loseScore": 996,
+    "note": null
+  },
+  {
+    "date": "2021-05-28",
+    "map": "The Parish",
+    "winners": [
+      "pratik",
+      "sundeep",
+      "calvin",
+      "jaden"
+    ],
+    "losers": [
+      "alex",
+      "emil",
+      "clarence",
+      "mevan"
+    ],
+    "winScore": 2484,
+    "loseScore": 1668,
+    "note": null
+  },
+  {
+    "date": "2021-05-29",
+    "map": "Dead Center",
+    "winners": [
+      "pratik",
+      "alex",
+      "calvin",
+      "mevan"
+    ],
+    "losers": [
+      "hwang",
+      "sundeep",
+      "hanosh",
+      "clarence"
+    ],
+    "winScore": 2444,
+    "loseScore": 1866,
+    "note": null
+  },
+  {
+    "date": "2021-05-29",
+    "map": "Cold Stream",
+    "winners": [
+      "jaden",
+      "alex",
+      "calvin",
+      "mevan"
+    ],
+    "losers": [
+      "hwang",
+      "sundeep",
+      "hanosh",
+      "clarence"
+    ],
+    "winScore": 2439,
+    "loseScore": 1823,
+    "note": null
+  },
+  {
+    "date": "2021-05-29",
+    "map": "The Last Stand",
+    "winners": [
+      "pratik",
+      "hanosh",
+      "mevan",
+      "clarence"
+    ],
+    "losers": [
+      "alex",
+      "sundeep",
+      "calvin",
+      "jaden"
+    ],
+    "winScore": 838,
+    "loseScore": 627,
+    "note": null
+  },
+  {
+    "date": "2021-05-30",
+    "map": "Swamp Fever",
+    "winners": [
+      "calvin",
+      "jeffrey",
+      "edmund",
+      "sundeep"
+    ],
+    "losers": [
+      "hanosh",
+      "kirt",
+      "jaden",
+      "alex"
+    ],
+    "winScore": 1689,
+    "loseScore": 1249,
+    "note": null
+  },
+  {
+    "date": "2021-05-31",
+    "map": "Crash Course",
+    "winners": [
+      "pratik",
+      "sundeep",
+      "hwang",
+      "jaden"
+    ],
+    "losers": [
+      "daniel",
+      "emil",
+      "calvin",
+      "alex"
+    ],
+    "winScore": 928,
+    "loseScore": 681,
+    "note": null
+  },
+  {
+    "date": "2021-06-03",
+    "map": "Cold Stream",
+    "winners": [
+      "emil",
+      "hwang",
+      "calvin",
+      "jaden"
+    ],
+    "losers": [
+      "pratik",
+      "mevan",
+      "sundeep",
+      "kirt"
+    ],
+    "winScore": 2514,
+    "loseScore": 1456,
+    "note": null
+  },
+  {
+    "date": "2021-06-07",
+    "map": "The Last Stand",
+    "winners": [
+      "alex",
+      "kirt",
+      "jaden",
+      "sundeep"
+    ],
+    "losers": [
+      "pratik",
+      "daniel",
+      "mevan",
+      "emil"
+    ],
+    "winScore": 580,
+    "loseScore": 466,
+    "note": null
+  },
+  {
+    "date": "2021-06-08",
+    "map": "Crash Course",
+    "winners": [
+      "hwang",
+      "calvin",
+      "jaden",
+      "clarence"
+    ],
+    "losers": [
+      "pratik",
+      "alex",
+      "emil",
+      "mevan"
+    ],
+    "winScore": 884,
+    "loseScore": 872,
+    "note": null
+  },
+  {
+    "date": "2021-06-09",
+    "map": "Dead Center",
+    "winners": [
+      "calvin",
+      "tjong",
+      "alex",
+      "clarence"
+    ],
+    "losers": [
+      "pratik",
+      "jaden",
+      "sundeep",
+      "mevan"
+    ],
+    "winScore": 1818,
+    "loseScore": 1777,
+    "note": null
+  },
+  {
+    "date": "2021-06-09",
+    "map": "The Last Stand",
+    "winners": [
+      "calvin",
+      "alex",
+      "jaden",
+      "emil"
+    ],
+    "losers": [
+      "pratik",
+      "tjong",
+      "sundeep",
+      "mevan"
+    ],
+    "winScore": 567,
+    "loseScore": 479,
+    "note": null
+  },
+  {
+    "date": "2021-06-10",
+    "map": "The Sacrifice",
+    "winners": [
+      "calvin",
+      "jaden",
+      "clarence",
+      "sundeep"
+    ],
+    "losers": [
+      "pratik",
+      "alex",
+      "eric",
+      "mevan"
+    ],
+    "winScore": 1044,
+    "loseScore": 903,
+    "note": null
+  },
+  {
+    "date": "2021-06-10",
+    "map": "Cold Stream",
+    "winners": [
+      "pratik",
+      "alex",
+      "clarence",
+      "sundeep"
+    ],
+    "losers": [
+      "calvin",
+      "jaden",
+      "daniel",
+      "mevan"
+    ],
+    "winScore": 2215,
+    "loseScore": 2163,
+    "note": null
+  },
+  {
+    "date": "2021-06-11",
+    "map": "Blood Harvest",
+    "winners": [
+      "hwang",
+      "jaden",
+      "clarence",
+      "sundeep"
+    ],
+    "losers": [
+      "calvin",
+      "alex",
+      "kirt",
+      "emil"
+    ],
+    "winScore": 1635,
+    "loseScore": 1415,
+    "note": null
+  },
+  {
+    "date": "2021-06-11",
+    "map": "The Passing",
+    "winners": [
+      "pratik",
+      "calvin",
+      "sundeep",
+      "emil"
+    ],
+    "losers": [
+      "hwang",
+      "clarence",
+      "alex",
+      "kirt"
+    ],
+    "winScore": 1001,
+    "loseScore": 733,
+    "note": null
+  },
+  {
+    "date": "2021-06-14",
+    "map": "Swamp Fever",
+    "winners": [
+      "pratik",
+      "jaden",
+      "alex",
+      "edmund"
+    ],
+    "losers": [
+      "eric",
+      "daniel",
+      "sundeep",
+      "emil"
+    ],
+    "winScore": 2211,
+    "loseScore": 2111,
+    "note": null
+  },
+  {
+    "date": "2021-06-14",
+    "map": "Cold Stream",
+    "winners": [
+      "pratik",
+      "jaden",
+      "daniel",
+      "emil"
+    ],
+    "losers": [
+      "alex",
+      "edmund",
+      "eric",
+      "sundeep"
+    ],
+    "winScore": 2153,
+    "loseScore": 1121,
+    "note": null
+  },
+  {
+    "date": "2021-06-15",
+    "map": "No Mercy",
+    "winners": [
+      "calvin",
+      "alex",
+      "emil",
+      "tjong"
+    ],
+    "losers": [
+      "pratik",
+      "jaden",
+      "sundeep",
+      "mevan"
+    ],
+    "winScore": 2018,
+    "loseScore": 1975,
+    "note": null
+  },
+  {
+    "date": "2021-06-15",
+    "map": "The Sacrifice",
+    "winners": [
+      "pratik",
+      "calvin",
+      "jaden",
+      "mevan"
+    ],
+    "losers": [
+      "tjong",
+      "alex",
+      "emil",
+      "sundeep"
+    ],
+    "winScore": 1448,
+    "loseScore": 711,
+    "note": null
+  },
+  {
+    "date": "2021-06-15",
+    "map": "Hard Rain",
+    "winners": [
+      "pratik",
+      "jeffrey",
+      "clarence",
+      "eric"
+    ],
+    "losers": [
+      "calvin",
+      "alex",
+      "sundeep",
+      "mevan"
+    ],
+    "winScore": 2669,
+    "loseScore": 2100,
+    "note": null
+  },
+  {
+    "date": "2021-06-15",
+    "map": "Cold Stream",
+    "winners": [
+      "pratik",
+      "jeffrey",
+      "alex",
+      "mevan"
+    ],
+    "losers": [
+      "kirt",
+      "jaden",
+      "sundeep",
+      "eric"
+    ],
+    "winScore": 1896,
+    "loseScore": 1686,
+    "note": null
+  },
+  {
+    "date": "2021-06-15",
+    "map": "The Last Stand",
+    "winners": [
+      "kirt",
+      "sundeep",
+      "alex",
+      "emil"
+    ],
+    "losers": [
+      "pratik",
+      "jeffrey",
+      "eric",
+      "jaden"
+    ],
+    "winScore": 319,
+    "loseScore": 158,
+    "note": null
+  },
+  {
+    "date": "2021-06-16",
+    "map": "Dead Air",
+    "winners": [
+      "calvin",
+      "emil",
+      "sundeep",
+      "kirt"
+    ],
+    "losers": [
+      "pratik",
+      "alex",
+      "jeffrey",
+      "eric"
+    ],
+    "winScore": 2467,
+    "loseScore": 1401,
+    "note": null
+  },
+  {
+    "date": "2021-06-16",
+    "map": "The Last Stand",
+    "winners": [
+      "calvin",
+      "pratik",
+      "jeffrey",
+      "eric"
+    ],
+    "losers": [
+      "jaden",
+      "alex",
+      "sundeep",
+      "kirt"
+    ],
+    "winScore": 373,
+    "loseScore": 363,
+    "note": null
+  },
+  {
+    "date": "2021-06-16",
+    "map": "Crash Course",
+    "winners": [
+      "calvin",
+      "pratik",
+      "jaden",
+      "eric"
+    ],
+    "losers": [
+      "alex",
+      "kirt",
+      "sundeep",
+      "jeffrey"
+    ],
+    "winScore": 1300,
+    "loseScore": 464,
+    "note": null
+  },
+  {
+    "date": "2021-06-17",
+    "map": "Cold Stream",
+    "winners": [
+      "pratik",
+      "clarence",
+      "jaden",
+      "emil"
+    ],
+    "losers": [
+      "eric",
+      "alex",
+      "mevan",
+      "sundeep"
+    ],
+    "winScore": 2100,
+    "loseScore": 1900,
+    "note": null
+  },
+  {
+    "date": "2021-06-18",
+    "map": "The Parish",
+    "winners": [
+      "pratik",
+      "emil",
+      "jeffrey",
+      "sundeep"
+    ],
+    "losers": [
+      "calvin",
+      "hwang",
+      "alex",
+      "eric"
+    ],
+    "winScore": 1253,
+    "loseScore": 557,
+    "note": null
+  },
+  {
+    "date": "2021-06-20",
+    "map": "Dark Carnival",
+    "winners": [
+      "calvin",
+      "daniel",
+      "sundeep",
+      "alex"
+    ],
+    "losers": [
+      "pratik",
+      "clarence",
+      "jaden",
+      "mevan"
+    ],
+    "winScore": 2906,
+    "loseScore": 1883,
+    "note": null
+  },
+  {
+    "date": "2021-06-21",
+    "map": "The Parish",
+    "winners": [
+      "emil",
+      "sundeep",
+      "daniel",
+      "alex"
+    ],
+    "losers": [
+      "calvin",
+      "pratik",
+      "kirt",
+      "mevan"
+    ],
+    "winScore": 2340,
+    "loseScore": 2275,
+    "note": null
+  },
+  {
+    "date": "2021-06-21",
+    "map": "Dead Center",
+    "winners": [
+      "calvin",
+      "pratik",
+      "alex",
+      "mevan"
+    ],
+    "losers": [
+      "emil",
+      "hwang",
+      "eric",
+      "daniel"
+    ],
+    "winScore": 1809,
+    "loseScore": 1307,
+    "note": null
+  },
+  {
+    "date": "2021-06-22",
+    "map": "Swamp Fever",
+    "winners": [
+      "pratik",
+      "sundeep",
+      "alex",
+      "jaden"
+    ],
+    "losers": [
+      "calvin",
+      "emil",
+      "jeffrey",
+      "kirt"
+    ],
+    "winScore": 2472,
+    "loseScore": 1140,
+    "note": null
+  },
+  {
+    "date": "2021-06-22",
+    "map": "The Last Stand",
+    "winners": [
+      "jaden",
+      "sundeep",
+      "alex",
+      "kirt"
+    ],
+    "losers": [
+      "pratik",
+      "calvin",
+      "jeffrey",
+      "emil"
+    ],
+    "winScore": 615,
+    "loseScore": 602,
+    "note": null
+  },
+  {
+    "date": "2021-06-23",
+    "map": "Cold Stream",
+    "winners": [
+      "clarence",
+      "alex",
+      "sundeep",
+      "emil"
+    ],
+    "losers": [
+      "pratik",
+      "jaden",
+      "calvin",
+      "eric"
+    ],
+    "winScore": 2804,
+    "loseScore": 2058,
+    "note": null
+  },
+  {
+    "date": "2021-06-23",
+    "map": "The Sacrifice",
+    "winners": [
+      "pratik",
+      "sundeep",
+      "jaden",
+      "eric"
+    ],
+    "losers": [
+      "alex",
+      "calvin",
+      "emil",
+      "kirt"
+    ],
+    "winScore": 1928,
+    "loseScore": 675,
+    "note": null
+  },
+  {
+    "date": "2021-06-23",
+    "map": "Crash Course",
+    "winners": [
+      "pratik",
+      "alex",
+      "emil",
+      "jeffrey"
+    ],
+    "losers": [
+      "sundeep",
+      "jaden",
+      "calvin",
+      "kirt"
+    ],
+    "winScore": 1275,
+    "loseScore": 827,
+    "note": null
+  },
+  {
+    "date": "2021-06-25",
+    "map": "No Mercy",
+    "winners": [
+      "sundeep",
+      "emil",
+      "calvin",
+      "daniel"
+    ],
+    "losers": [
+      "pratik",
+      "alex",
+      "jaden",
+      "mevan"
+    ],
+    "winScore": 1896,
+    "loseScore": 1746,
+    "note": null
+  },
+  {
+    "date": "2021-06-25",
+    "map": "Cold Stream",
+    "winners": [
+      "jaden",
+      "calvin",
+      "emil",
+      "daniel"
+    ],
+    "losers": [
+      "pratik",
+      "alex",
+      "sundeep",
+      "mevan"
+    ],
+    "winScore": 1831,
+    "loseScore": 1577,
+    "note": null
+  },
+  {
+    "date": "2021-06-26",
+    "map": "Dead Center",
+    "winners": [
+      "pratik",
+      "daniel",
+      "jaden",
+      "eric"
+    ],
+    "losers": [
+      "sundeep",
+      "calvin",
+      "tjong",
+      "kirt"
+    ],
+    "winScore": 2599,
+    "loseScore": 1412,
+    "note": null
+  },
+  {
+    "date": "2021-06-26",
+    "map": "Cold Stream",
+    "winners": [
+      "pratik",
+      "sundeep",
+      "calvin",
+      "eric"
+    ],
+    "losers": [
+      "emil",
+      "daniel",
+      "hwang",
+      "jeffrey"
+    ],
+    "winScore": 1158,
+    "loseScore": 534,
+    "note": null
+  },
+  {
+    "date": "2021-06-26",
+    "map": "The Passing",
+    "winners": [
+      "pratik",
+      "jaden",
+      "hwang",
+      "eric"
+    ],
+    "losers": [
+      "sundeep",
+      "calvin",
+      "daniel",
+      "jeffrey"
+    ],
+    "winScore": 1252,
+    "loseScore": 947,
+    "note": null
+  },
+  {
+    "date": "2021-06-27",
+    "map": "The Sacrifice",
+    "winners": [
+      "pratik",
+      "clarence",
+      "tjong",
+      "kirt"
+    ],
+    "losers": [
+      "sundeep",
+      "emil",
+      "calvin",
+      "eric"
+    ],
+    "winScore": 1344,
+    "loseScore": 915,
+    "note": null
+  },
+  {
+    "date": "2021-06-29",
+    "map": "Swamp Fever",
+    "winners": [
+      "pratik",
+      "emil",
+      "kirt",
+      "calvin"
+    ],
+    "losers": [
+      "sundeep",
+      "clarence",
+      "jaden",
+      "jeffrey"
+    ],
+    "winScore": 2259,
+    "loseScore": 1578,
+    "note": null
+  },
+  {
+    "date": "2021-06-30",
+    "map": "Cold Stream",
+    "winners": [
+      "pratik",
+      "alex",
+      "jeffrey",
+      "eric"
+    ],
+    "losers": [
+      "jaden",
+      "emil",
+      "calvin",
+      "kirt"
+    ],
+    "winScore": 2765,
+    "loseScore": 1299,
+    "note": null
+  },
+  {
+    "date": "2021-06-30",
+    "map": "The Last Stand",
+    "winners": [
+      "pratik",
+      "hanosh",
+      "calvin",
+      "jeffrey"
+    ],
+    "losers": [
+      "alex",
+      "jaden",
+      "emil",
+      "sundeep"
+    ],
+    "winScore": 1348,
+    "loseScore": 884,
+    "note": null
+  },
+  {
+    "date": "2021-07-07",
+    "map": "Cold Stream",
+    "winners": [
+      "emil",
+      "pratik",
+      "calvin",
+      "jaden"
+    ],
+    "losers": [
+      "kirt",
+      "daniel",
+      "sundeep",
+      "tjong"
+    ],
+    "winScore": 2566,
+    "loseScore": 2186,
+    "note": null
+  },
+  {
+    "date": "2021-07-08",
+    "map": "Dead Center",
+    "winners": [
+      "pratik",
+      "jaden",
+      "daniel",
+      "emil"
+    ],
+    "losers": [
+      "sundeep",
+      "mevan",
+      "hanosh",
+      "calvin"
+    ],
+    "winScore": 2301,
+    "loseScore": 1768,
+    "note": null
+  },
+  {
+    "date": "2021-07-08",
+    "map": "The Last Stand",
+    "winners": [
+      "jeffrey",
+      "jaden",
+      "hanosh",
+      "mevan"
+    ],
+    "losers": [
+      "pratik",
+      "calvin",
+      "sundeep",
+      "emil"
+    ],
+    "winScore": 587,
+    "loseScore": 565,
+    "note": null
+  },
+  {
+    "date": "2021-07-08",
+    "map": "Dead Air",
+    "winners": [
+      "hanosh",
+      "pratik",
+      "jaden",
+      "sundeep"
+    ],
+    "losers": [
+      "mevan",
+      "daniel",
+      "jeffrey",
+      "emil"
+    ],
+    "winScore": 3218,
+    "loseScore": 1771,
+    "note": null
+  },
+  {
+    "date": "2021-07-09",
+    "map": "The Sacrifice",
+    "winners": [
+      "jaden",
+      "calvin",
+      "tjong",
+      "sundeep"
+    ],
+    "losers": [
+      "pratik",
+      "daniel",
+      "kirt",
+      "mevan"
+    ],
+    "winScore": 1270,
+    "loseScore": 1168,
+    "note": null
+  },
+  {
+    "date": "2021-07-10",
+    "map": "Hard Rain",
+    "winners": [
+      "calvin",
+      "jaden",
+      "sundeep",
+      "kirt"
+    ],
+    "losers": [
+      "alex",
+      "mevan",
+      "pratik",
+      "hwang"
+    ],
+    "winScore": 2618,
+    "loseScore": 1984,
+    "note": null
+  },
+  {
+    "date": "2021-07-11",
+    "map": "Cold Stream",
+    "winners": [
+      "pratik",
+      "calvin",
+      "hanosh",
+      "mevan"
+    ],
+    "losers": [
+      "jaden",
+      "sundeep",
+      "emil",
+      "eric"
+    ],
+    "winScore": 2546,
+    "loseScore": 1389,
+    "note": null
+  },
+  {
+    "date": "2021-07-12",
+    "map": "Death Toll",
+    "winners": [
+      "pratik",
+      "calvin",
+      "hanosh",
+      "eric"
+    ],
+    "losers": [
+      "jaden",
+      "sundeep",
+      "clarence",
+      "kirt"
+    ],
+    "winScore": 2299,
+    "loseScore": 1841,
+    "note": null
+  },
+  {
+    "date": "2021-07-13",
+    "map": "No Mercy",
+    "winners": [
+      "daniel",
+      "alex",
+      "emil",
+      "eric"
+    ],
+    "losers": [
+      "calvin",
+      "hanosh",
+      "kirt",
+      "mevan"
+    ],
+    "winScore": 2518,
+    "loseScore": 2376,
+    "note": null
+  },
+  {
+    "date": "2021-07-14",
+    "map": "Dark Carnival",
+    "winners": [
+      "pratik",
+      "sundeep",
+      "hanosh",
+      "tjong"
+    ],
+    "losers": [
+      "clarence",
+      "alex",
+      "emil",
+      "mevan"
+    ],
+    "winScore": 3197,
+    "loseScore": 2942,
+    "note": null
+  },
+  {
+    "date": "2021-07-15",
+    "map": "The Parish",
+    "winners": [
+      "pratik",
+      "tjong",
+      "eric",
+      "mevan"
+    ],
+    "losers": [
+      "sundeep",
+      "kirt",
+      "hanosh",
+      "emil"
+    ],
+    "winScore": 2391,
+    "loseScore": 2217,
+    "note": null
+  },
+  {
+    "date": "2021-07-15",
+    "map": "Blood Harvest",
+    "winners": [
+      "pratik",
+      "jaden",
+      "kirt",
+      "mevan"
+    ],
+    "losers": [
+      "calvin",
+      "hanosh",
+      "sundeep",
+      "emil"
+    ],
+    "winScore": 2800,
+    "loseScore": 2694,
+    "note": null
+  },
+  {
+    "date": "2021-07-16",
+    "map": "The Passing",
+    "winners": [
+      "jaden",
+      "tjong",
+      "daniel",
+      "hanosh"
+    ],
+    "losers": [
+      "pratik",
+      "calvin",
+      "emil",
+      "eric"
+    ],
+    "winScore": 1079,
+    "loseScore": 1024,
+    "note": null
+  },
+  {
+    "date": "2021-07-16",
+    "map": "No Mercy",
+    "winners": [
+      "pratik",
+      "tjong",
+      "calvin",
+      "eric"
+    ],
+    "losers": [
+      "jaden",
+      "hanosh",
+      "jeffrey",
+      "alex"
+    ],
+    "winScore": 1946,
+    "loseScore": 1333,
+    "note": null
+  },
+  {
+    "date": "2021-07-16",
+    "map": "Dead Air",
+    "winners": [
+      "jaden",
+      "calvin",
+      "hanosh",
+      "jeffrey"
+    ],
+    "losers": [
+      "pratik",
+      "tjong",
+      "eric",
+      "emil"
+    ],
+    "winScore": 2750,
+    "loseScore": 2702,
+    "note": null
+  },
+  {
+    "date": "2021-07-17",
+    "map": "Blood Harvest",
+    "winners": [
+      "pratik",
+      "jaden",
+      "tjong",
+      "eric"
+    ],
+    "losers": [
+      "alex",
+      "daniel",
+      "clarence",
+      "sundeep"
+    ],
+    "winScore": 3035,
+    "loseScore": 1910,
+    "note": null
+  },
+  {
+    "date": "2021-07-17",
+    "map": "Dead Air",
+    "winners": [
+      "pratik",
+      "daniel",
+      "eric",
+      "emil"
+    ],
+    "losers": [
+      "calvin",
+      "tjong",
+      "clarence",
+      "sundeep"
+    ],
+    "winScore": 2838,
+    "loseScore": 1768,
+    "note": null
+  },
+  {
+    "date": "2021-07-17",
+    "map": "The Sacrifice",
+    "winners": [
+      "pratik",
+      "tjong",
+      "jeffrey",
+      "kirt"
+    ],
+    "losers": [
+      "jaden",
+      "daniel",
+      "calvin",
+      "emil"
+    ],
+    "winScore": 1839,
+    "loseScore": 1008,
+    "note": null
+  },
+  {
+    "date": "2021-07-19",
+    "map": "Dead Center",
+    "winners": [
+      "jaden",
+      "hanosh",
+      "calvin",
+      "alex"
+    ],
+    "losers": [
+      "pratik",
+      "tjong",
+      "sundeep",
+      "kirt"
+    ],
+    "winScore": 3075,
+    "loseScore": 2100,
+    "note": null
+  },
+  {
+    "date": "2021-07-20",
+    "map": "Cold Stream",
+    "winners": [
+      "calvin",
+      "tjong",
+      "daniel",
+      "sundeep"
+    ],
+    "losers": [
+      "pratik",
+      "alex",
+      "emil",
+      "mevan"
+    ],
+    "winScore": 2356,
+    "loseScore": 1870,
+    "note": null
+  },
+  {
+    "date": "2021-07-20",
+    "map": "The Passing",
+    "winners": [
+      "calvin",
+      "daniel",
+      "alex",
+      "sundeep"
+    ],
+    "losers": [
+      "pratik",
+      "tjong",
+      "emil",
+      "mevan"
+    ],
+    "winScore": 1403,
+    "loseScore": 1389,
+    "note": null
+  },
+  {
+    "date": "2021-07-21",
+    "map": "Crash Course",
+    "winners": [
+      "pratik",
+      "tjong",
+      "alex",
+      "emil"
+    ],
+    "losers": [
+      "jaden",
+      "calvin",
+      "sundeep",
+      "eric"
+    ],
+    "winScore": 639,
+    "loseScore": 527,
+    "note": null
+  },
+  {
+    "date": "2021-09-20",
+    "map": "Dead Center",
+    "winners": [
+      "calvin",
+      "hwang",
+      "eric",
+      "tjong"
+    ],
+    "losers": [
+      "pratik",
+      "alex",
+      "varun",
+      "mevan"
+    ],
+    "winScore": 2001,
+    "loseScore": 1839,
+    "note": null
+  },
+  {
+    "date": "2021-09-22",
+    "map": "The Parish",
+    "winners": [
+      "pratik",
+      "jeffrey",
+      "daniel",
+      "jaden"
+    ],
+    "losers": [
+      "sundeep",
+      "kirt",
+      "alex",
+      "mevan"
+    ],
+    "winScore": 2552,
+    "loseScore": 1549,
+    "note": null
+  },
+  {
+    "date": "2021-09-23",
+    "map": "Dead Air",
+    "winners": [
+      "pratik",
+      "calvin",
+      "alex",
+      "varun"
+    ],
+    "losers": [
+      "clarence",
+      "tjong",
+      "jeffrey",
+      "jaden"
+    ],
+    "winScore": 2860,
+    "loseScore": 1683,
+    "note": null
+  },
+  {
+    "date": "2021-09-24",
+    "map": "Hard Rain",
+    "winners": [
+      "calvin",
+      "sundeep",
+      "alex",
+      "kirt"
+    ],
+    "losers": [
+      "pratik",
+      "jaden",
+      "jeffrey",
+      "tjong"
+    ],
+    "winScore": 2461,
+    "loseScore": 2344,
+    "note": null
+  },
+  {
+    "date": "2021-09-28",
+    "map": "Cold Stream",
+    "winners": [
+      "pratik",
+      "hanosh",
+      "emil",
+      "alex"
+    ],
+    "losers": [
+      "eric",
+      "jaden",
+      "mevan",
+      "jeffrey"
+    ],
+    "winScore": 2255,
+    "loseScore": 1681,
+    "note": null
+  },
+  {
+    "date": "2021-09-29",
+    "map": "Dark Carnival",
+    "winners": [
+      "slmswolfenstein",
+      "alex",
+      "jaden",
+      "jeffrey"
+    ],
+    "losers": [
+      "pratik",
+      "emil",
+      "clarence",
+      "calvin"
+    ],
+    "winScore": 3298,
+    "loseScore": 2749,
+    "note": null
+  },
+  {
+    "date": "2022-01-12",
+    "map": "Cold Stream",
+    "winners": [
+      "clarence",
+      "alex",
+      "calvin",
+      "pratik"
+    ],
+    "losers": [
+      "jeffrey",
+      "emil",
+      "jaden",
+      "tjong"
+    ],
+    "winScore": 2770,
+    "loseScore": 2148,
+    "note": null
+  },
+  {
+    "date": "2022-03-20",
+    "map": "The Sacrifice",
+    "winners": [
+      "pratik",
+      "hwang",
+      "jaden",
+      "sundeep"
+    ],
+    "losers": [
+      "clarence",
+      "alex",
+      "eric",
+      "emil"
+    ],
+    "winScore": 1820,
+    "loseScore": 617,
+    "note": null
+  },
+  {
+    "date": "2022-05-31",
+    "map": "The Passing",
+    "winners": [
+      "pratik",
+      "alex",
+      "clarence",
+      "hwang"
+    ],
+    "losers": [
+      "calvin",
+      "jaden",
+      "daniel",
+      "mevan"
+    ],
+    "winScore": 1361,
+    "loseScore": 1157,
+    "note": null
+  },
+  {
+    "date": "2022-05-31",
+    "map": "Death Toll",
+    "winners": [
+      "pratik",
+      "jaden",
+      "mevan",
+      "alex"
+    ],
+    "losers": [
+      "daniel",
+      "hwang",
+      "calvin",
+      "varun"
+    ],
+    "winScore": 1800,
+    "loseScore": 877,
+    "note": null
+  },
+  {
+    "date": "2022-06-05",
+    "map": "Death Toll",
+    "winners": [
+      "jaden",
+      "daniel",
+      "eric",
+      "hanosh"
+    ],
+    "losers": [
+      "mevan",
+      "pratik",
+      "alex",
+      "clarence"
+    ],
+    "winScore": 2273,
+    "loseScore": 1243,
+    "note": null
+  },
+  {
+    "date": "2022-06-05",
+    "map": "No Mercy",
+    "winners": [
+      "mevan",
+      "pratik",
+      "hanosh",
+      "alex"
+    ],
+    "losers": [
+      "jaden",
+      "daniel",
+      "emil",
+      "clarence"
+    ],
+    "winScore": 2390,
+    "loseScore": 1927,
+    "note": null
+  },
+  {
+    "date": "2022-06-06",
+    "map": "Dead Air",
+    "winners": [
+      "pratik",
+      "jaden",
+      "mevan",
+      "hanosh"
+    ],
+    "losers": [
+      "daniel",
+      "tjong",
+      "alex",
+      "emil"
+    ],
+    "winScore": 1125,
+    "loseScore": 647,
+    "note": null
+  },
+  {
+    "date": "2022-06-06",
+    "map": "Swamp Fever",
+    "winners": [
+      "pratik",
+      "emil",
+      "alex",
+      "calvin"
+    ],
+    "losers": [
+      "daniel",
+      "jaden",
+      "mevan",
+      "hanosh"
+    ],
+    "winScore": 2654,
+    "loseScore": 2601,
+    "note": null
+  },
+  {
+    "date": "2022-08-04",
+    "map": "Cold Stream",
+    "winners": [
+      "pratik",
+      "jaden",
+      "hanosh",
+      "eric"
+    ],
+    "losers": [
+      "calvin",
+      "alex",
+      "emil",
+      "mevan"
+    ],
+    "winScore": 2560,
+    "loseScore": 1645,
+    "note": null
+  },
+  {
+    "date": "2022-08-07",
+    "map": "Dead Center",
+    "winners": [
+      "clarence",
+      "jaden",
+      "tjong",
+      "emil"
+    ],
+    "losers": [
+      "pratik",
+      "calvin",
+      "eric",
+      "alex"
+    ],
+    "winScore": 1910,
+    "loseScore": 1801,
+    "note": null
+  },
+  {
+    "date": "2022-08-08",
+    "map": "Blood Harvest",
+    "winners": [
+      "pratik",
+      "calvin",
+      "elijah",
+      "emil"
+    ],
+    "losers": [
+      "alex",
+      "eric",
+      "jaden",
+      "hanosh"
+    ],
+    "winScore": 2779,
+    "loseScore": 2058,
+    "note": null
+  },
+  {
+    "date": "2022-08-09",
+    "map": "The Parish",
+    "winners": [
+      "jaden",
+      "calvin",
+      "mevan",
+      "hanosh"
+    ],
+    "losers": [
+      "pratik",
+      "alex",
+      "eric",
+      "varun"
+    ],
+    "winScore": 2822,
+    "loseScore": 1805,
+    "note": null
+  },
+  {
+    "date": "2022-09-21",
+    "map": "Cold Stream",
+    "winners": [
+      "alex",
+      "calvin",
+      "jaden",
+      "emil"
+    ],
+    "losers": [
+      "pratik",
+      "daniel",
+      "gurveer",
+      "tjong"
+    ],
+    "winScore": 1902,
+    "loseScore": 1719,
+    "note": null
+  },
+  {
+    "date": "2022-09-24",
+    "map": "No Mercy",
+    "winners": [
+      "jaden",
+      "alex",
+      "pratik",
+      "mevan"
+    ],
+    "losers": [
+      "tjong",
+      "calvin",
+      "varun",
+      "emil"
+    ],
+    "winScore": 3146,
+    "loseScore": 1178,
+    "note": null
+  },
+  {
+    "date": "2022-10-24",
+    "map": "Hard Rain",
+    "winners": [
+      "emil",
+      "calvin",
+      "jaden",
+      "daniel"
+    ],
+    "losers": [
+      "pratik",
+      "clarence",
+      "eric",
+      "gurveer"
+    ],
+    "winScore": 3132,
+    "loseScore": 2607,
+    "note": null
+  },
+  {
+    "date": "2023-08-25",
+    "map": "Cold Stream",
+    "winners": [
+      "pratik",
+      "jaden",
+      "alex",
+      "jacob"
+    ],
+    "losers": [
+      "hanosh",
+      "calvin",
+      "clarence",
+      "eric"
+    ],
+    "winScore": 2828,
+    "loseScore": 1333,
+    "note": null
+  },
+  {
+    "date": "2023-08-25",
+    "map": "The Last Stand",
+    "winners": [
+      "jacob",
+      "calvin",
+      "clarence",
+      "eric"
+    ],
+    "losers": [
+      "pratik",
+      "jaden",
+      "alex",
+      "hanosh"
+    ],
+    "winScore": 577,
+    "loseScore": 496,
+    "note": null
+  },
+  {
+    "date": "2024-06-02",
+    "map": "The Parish",
+    "winners": [
+      "daniel",
+      "calvin",
+      "eric",
+      "clarence"
+    ],
+    "losers": [
+      "jacob",
+      "pratik",
+      "emil",
+      "hanosh"
+    ],
+    "winScore": 1965,
+    "loseScore": 1849,
+    "note": null
+  },
+  {
+    "date": "2024-06-02",
+    "map": "The Last Stand",
+    "winners": [
+      "pratik",
+      "calvin",
+      "jacob",
+      "clarence"
+    ],
+    "losers": [
+      "hanosh",
+      "daniel",
+      "emil",
+      "eric"
+    ],
+    "winScore": 573,
+    "loseScore": 91,
+    "note": null
+  },
+  {
+    "date": "2024-06-03",
+    "map": "No Mercy",
+    "winners": [
+      "jacob",
+      "clarence",
+      "calvin",
+      "daniel"
+    ],
+    "losers": [
+      "pratik",
+      "jeffrey",
+      "eric",
+      "hanosh"
+    ],
+    "winScore": 2882,
+    "loseScore": 1363,
+    "note": null
+  },
+  {
+    "date": "2024-06-03",
+    "map": "The Passing",
+    "winners": [
+      "calvin",
+      "daniel",
+      "jeffrey",
+      "paul"
+    ],
+    "losers": [
+      "pratik",
+      "eric",
+      "jacob",
+      "hanosh"
+    ],
+    "winScore": 1163,
+    "loseScore": 981,
+    "note": null
+  },
+  {
+    "date": "2024-06-08",
+    "map": "Dead Center",
+    "winners": [
+      "calvin",
+      "clarence",
+      "hwang",
+      "sundeep"
+    ],
+    "losers": [
+      "jeffrey",
+      "jacob",
+      "jaden",
+      "pratik"
+    ],
+    "winScore": 2585,
+    "loseScore": 2156,
+    "note": null
+  },
+  {
+    "date": "2024-06-08",
+    "map": "Cold Stream",
+    "winners": [
+      "pratik",
+      "jacob",
+      "jaden",
+      "clarence"
+    ],
+    "losers": [
+      "calvin",
+      "hwang",
+      "eric",
+      "sundeep"
+    ],
+    "winScore": 2838,
+    "loseScore": 1487,
+    "note": null
+  },
+  {
+    "date": "2024-06-08",
+    "map": "Blood Harvest",
+    "winners": [
+      "pratik",
+      "jacob",
+      "eric",
+      "clarence"
+    ],
+    "losers": [
+      "sundeep",
+      "jaden",
+      "hwang",
+      "calvin"
+    ],
+    "winScore": 1914,
+    "loseScore": 1846,
+    "note": null
+  },
+  {
+    "date": "2024-06-09",
+    "map": "Hard Rain",
+    "winners": [
+      "jaden",
+      "pratik",
+      "clarence",
+      "emil"
+    ],
+    "losers": [
+      "jeffrey",
+      "eric",
+      "jacob",
+      "sundeep"
+    ],
+    "winScore": 2179,
+    "loseScore": 1451,
+    "note": null
+  },
+  {
+    "date": "2024-06-09",
+    "map": "Death Toll",
+    "winners": [
+      "pratik",
+      "clarence",
+      "jeffrey",
+      "emil"
+    ],
+    "losers": [
+      "calvin",
+      "sundeep",
+      "jacob",
+      "eric"
+    ],
+    "winScore": 2802,
+    "loseScore": 2417,
+    "note": null
+  },
+  {
+    "date": "2024-06-09",
+    "map": "Swamp Fever",
+    "winners": [
+      "pratik",
+      "jeffrey",
+      "sundeep",
+      "emil"
+    ],
+    "losers": [
+      "calvin",
+      "clarence",
+      "jaden",
+      "jacob"
+    ],
+    "winScore": 2571,
+    "loseScore": 2269,
+    "note": null
+  },
+  {
+    "date": "2024-06-10",
+    "map": "The Sacrifice",
+    "winners": [
+      "jacob",
+      "calvin",
+      "jaden",
+      "varun"
+    ],
+    "losers": [
+      "pratik",
+      "jeffrey",
+      "sundeep",
+      "eric"
+    ],
+    "winScore": 1071,
+    "loseScore": 910,
+    "note": null
+  },
+  {
+    "date": "2024-06-10",
+    "map": "The Last Stand",
+    "winners": [
+      "pratik",
+      "sundeep",
+      "jacob",
+      "eric"
+    ],
+    "losers": [
+      "calvin",
+      "jeffrey",
+      "jaden",
+      "varun"
+    ],
+    "winScore": 1521,
+    "loseScore": 568,
+    "note": null
+  },
+  {
+    "date": "2024-06-11",
+    "map": "Cold Stream",
+    "winners": [
+      "tjong",
+      "pratik",
+      "jaden",
+      "eric"
+    ],
+    "losers": [
+      "emil",
+      "varun",
+      "jacob",
+      "sundeep"
+    ],
+    "winScore": 2815,
+    "loseScore": 1535,
+    "note": null
+  },
+  {
+    "date": "2024-06-12",
+    "map": "Crash Course",
+    "winners": [
+      "daniel",
+      "jaden",
+      "jacob",
+      "varun"
+    ],
+    "losers": [
+      "calvin",
+      "emil",
+      "sundeep",
+      "eric"
+    ],
+    "winScore": 788,
+    "loseScore": 650,
+    "note": null
+  },
+  {
+    "date": "2024-06-14",
+    "map": "Dark Carnival",
+    "winners": [
+      "jaden",
+      "clarence",
+      "jacob",
+      "emil"
+    ],
+    "losers": [
+      "pratik",
+      "calvin",
+      "jeffrey",
+      "gurveer"
+    ],
+    "winScore": 3145,
+    "loseScore": 2880,
+    "note": null
+  },
+  {
+    "date": "2024-06-14",
+    "map": "The Parish",
+    "winners": [
+      "daniel",
+      "pratik",
+      "jaden",
+      "tjong"
+    ],
+    "losers": [
+      "calvin",
+      "jeffrey",
+      "jacob",
+      "gurveer"
+    ],
+    "winScore": 3042,
+    "loseScore": 1880,
+    "note": null
+  },
+  {
+    "date": "2024-06-15",
+    "map": "Dead Air",
+    "winners": [
+      "jaden",
+      "emil",
+      "sundeep",
+      "jacob"
+    ],
+    "losers": [
+      "daniel",
+      "pratik",
+      "clarence",
+      "kirt"
+    ],
+    "winScore": 2231,
+    "loseScore": 2102,
+    "note": null
+  },
+  {
+    "date": "2024-06-16",
+    "map": "The Sacrifice",
+    "winners": [
+      "clarence",
+      "calvin",
+      "daniel",
+      "eric"
+    ],
+    "losers": [
+      "pratik",
+      "edmund",
+      "jacob",
+      "varun"
+    ],
+    "winScore": 1051,
+    "loseScore": 728,
+    "note": null
+  },
+  {
+    "date": "2024-06-16",
+    "map": "The Last Stand",
+    "winners": [
+      "pratik",
+      "clarence",
+      "jacob",
+      "eric"
+    ],
+    "losers": [
+      "calvin",
+      "daniel",
+      "edmund",
+      "varun"
+    ],
+    "winScore": 520,
+    "loseScore": 364,
+    "note": null
+  },
+  {
+    "date": "2024-06-17",
+    "map": "Dead Center",
+    "winners": [
+      "clarence",
+      "jaden",
+      "pratik",
+      "emil"
+    ],
+    "losers": [
+      "calvin",
+      "eric",
+      "sundeep",
+      "jacob"
+    ],
+    "winScore": 2568,
+    "loseScore": 1577,
+    "note": null
+  },
+  {
+    "date": "2024-06-18",
+    "map": "Hard Rain",
+    "winners": [
+      "jacob",
+      "pratik",
+      "sundeep",
+      "emil"
+    ],
+    "losers": [
+      "calvin",
+      "daniel",
+      "jaden",
+      "paul"
+    ],
+    "winScore": 3550,
+    "loseScore": 2157,
+    "note": null
+  },
+  {
+    "date": "2024-06-19",
+    "map": "No Mercy",
+    "winners": [
+      "pratik",
+      "eric",
+      "sundeep",
+      "clarence"
+    ],
+    "losers": [
+      "james",
+      "jacob",
+      "emil",
+      "jaden"
+    ],
+    "winScore": 2495,
+    "loseScore": 1625,
+    "note": null
+  },
+  {
+    "date": "2024-06-19",
+    "map": "Cold Stream",
+    "winners": [
+      "jacob",
+      "jaden",
+      "elijah",
+      "calvin"
+    ],
+    "losers": [
+      "sundeep",
+      "emil",
+      "clarence",
+      "daniel"
+    ],
+    "winScore": 2040,
+    "loseScore": 1960,
+    "note": null
+  },
+  {
+    "date": "2024-06-21",
+    "map": "Swamp Fever",
+    "winners": [
+      "pratik",
+      "jacob",
+      "jaden",
+      "kirt"
+    ],
+    "losers": [
+      "calvin",
+      "eric",
+      "sundeep",
+      "gurveer"
+    ],
+    "winScore": 2456,
+    "loseScore": 1588,
+    "note": null
+  },
+  {
+    "date": "2024-06-22",
+    "map": "Dead Air",
+    "winners": [
+      "pratik",
+      "jaden",
+      "sundeep",
+      "gurveer"
+    ],
+    "losers": [
+      "clarence",
+      "emil",
+      "jacob",
+      "eric"
+    ],
+    "winScore": 2429,
+    "loseScore": 1213,
+    "note": null
+  },
+  {
+    "date": "2024-06-22",
+    "map": "The Last Stand",
+    "winners": [
+      "clarence",
+      "jacob",
+      "sundeep",
+      "eric"
+    ],
+    "losers": [
+      "gurveer",
+      "jaden",
+      "emil",
+      "pratik"
+    ],
+    "winScore": 632,
+    "loseScore": 521,
+    "note": null
+  },
+  {
+    "date": "2024-06-23",
+    "map": "Blood Harvest",
+    "winners": [
+      "pratik",
+      "calvin",
+      "jaden",
+      "emil"
+    ],
+    "losers": [
+      "sundeep",
+      "jacob",
+      "clarence",
+      "tjong"
+    ],
+    "winScore": 3004,
+    "loseScore": 2369,
+    "note": null
+  },
+  {
+    "date": "2024-06-23",
+    "map": "Dead Center",
+    "winners": [
+      "pratik",
+      "jaden",
+      "clarence",
+      "hanosh"
+    ],
+    "losers": [
+      "eric",
+      "jacob",
+      "emil",
+      "sundeep"
+    ],
+    "winScore": 2848,
+    "loseScore": 1715,
+    "note": null
+  },
+  {
+    "date": "2024-06-24",
+    "map": "Dark Carnival",
+    "winners": [
+      "eric",
+      "calvin",
+      "sundeep",
+      "jeffrey"
+    ],
+    "losers": [
+      "pratik",
+      "jaden",
+      "emil",
+      "varun"
+    ],
+    "winScore": 2470,
+    "loseScore": 2188,
+    "note": null
+  },
+  {
+    "date": "2024-06-24",
+    "map": "The Passing",
+    "winners": [
+      "pratik",
+      "jacob",
+      "varun",
+      "jaden"
+    ],
+    "losers": [
+      "emil",
+      "kirt",
+      "clarence",
+      "eric"
+    ],
+    "winScore": 1043,
+    "loseScore": 573,
+    "note": null
+  },
+  {
+    "date": "2024-06-25",
+    "map": "Cold Stream",
+    "winners": [
+      "tjong",
+      "clarence",
+      "jacob",
+      "daniel"
+    ],
+    "losers": [
+      "calvin",
+      "pratik",
+      "jaden",
+      "jeffrey"
+    ],
+    "winScore": 2816,
+    "loseScore": 2682,
+    "note": null
+  },
+  {
+    "date": "2024-06-26",
+    "map": "Dead Air",
+    "winners": [
+      "pratik",
+      "jaden",
+      "jacob",
+      "emil"
+    ],
+    "losers": [
+      "tjong",
+      "hanosh",
+      "sundeep",
+      "jeffrey"
+    ],
+    "winScore": 3397,
+    "loseScore": 1509,
+    "note": null
+  },
+  {
+    "date": "2024-06-26",
+    "map": "The Sacrifice",
+    "winners": [
+      "pratik",
+      "jaden",
+      "jeffrey",
+      "emil"
+    ],
+    "losers": [
+      "tjong",
+      "jacob",
+      "sundeep",
+      "gurveer"
+    ],
+    "winScore": 1795,
+    "loseScore": 1352,
+    "note": null
+  },
+  {
+    "date": "2024-06-27",
+    "map": "No Mercy",
+    "winners": [
+      "pratik",
+      "jaden",
+      "clarence",
+      "hanosh"
+    ],
+    "losers": [
+      "tjong",
+      "emil",
+      "sundeep",
+      "jacob"
+    ],
+    "winScore": 3202,
+    "loseScore": 1885,
+    "note": null
+  },
+  {
+    "date": "2024-06-27",
+    "map": "The Last Stand",
+    "winners": [
+      "pratik",
+      "calvin",
+      "sundeep",
+      "emil"
+    ],
+    "losers": [
+      "jacob",
+      "jaden",
+      "hanosh",
+      "tjong"
+    ],
+    "winScore": 1026,
+    "loseScore": 794,
+    "note": null
+  },
+  {
+    "date": "2024-06-28",
+    "map": "Dead Center",
+    "winners": [
+      "clarence",
+      "jaden",
+      "pratik",
+      "varun"
+    ],
+    "losers": [
+      "eric",
+      "tjong",
+      "emil",
+      "sundeep"
+    ],
+    "winScore": 2099,
+    "loseScore": 1697,
+    "note": null
+  },
+  {
+    "date": "2024-06-28",
+    "map": "Cold Stream",
+    "winners": [
+      "eric",
+      "clarence",
+      "tjong",
+      "sundeep"
+    ],
+    "losers": [
+      "pratik",
+      "jaden",
+      "varun",
+      "emil"
+    ],
+    "winScore": 2043,
+    "loseScore": 1953,
+    "note": null
+  },
+  {
+    "date": "2024-06-29",
+    "map": "Dead Air",
+    "winners": [
+      "jacob",
+      "emil",
+      "eric",
+      "jaden"
+    ],
+    "losers": [
+      "varun",
+      "tjong",
+      "pratik",
+      "sundeep"
+    ],
+    "winScore": 2405,
+    "loseScore": 1278,
+    "note": null
+  },
+  {
+    "date": "2024-06-29",
+    "map": "The Last Stand",
+    "winners": [
+      "clarence",
+      "varun",
+      "pratik",
+      "sundeep"
+    ],
+    "losers": [
+      "jacob",
+      "jaden",
+      "eric",
+      "tjong"
+    ],
+    "winScore": 896,
+    "loseScore": 177,
+    "note": null
+  },
+  {
+    "date": "2024-06-30",
+    "map": "Cold Stream",
+    "winners": [
+      "jaden",
+      "eric",
+      "sundeep",
+      "tjong"
+    ],
+    "losers": [
+      "daniel",
+      "jeffrey",
+      "pratik",
+      "jacob"
+    ],
+    "winScore": 2619,
+    "loseScore": 2212,
+    "note": null
+  },
+  {
+    "date": "2024-07-01",
+    "map": "No Mercy",
+    "winners": [
+      "jaden",
+      "pratik",
+      "jacob",
+      "jeffrey"
+    ],
+    "losers": [
+      "calvin",
+      "sundeep",
+      "emil",
+      "eric"
+    ],
+    "winScore": 2854,
+    "loseScore": 2670,
+    "note": null
+  },
+  {
+    "date": "2024-07-02",
+    "map": "Blood Harvest",
+    "winners": [
+      "jaden",
+      "sundeep",
+      "clarence",
+      "tjong"
+    ],
+    "losers": [
+      "pratik",
+      "daniel",
+      "emil",
+      "jacob"
+    ],
+    "winScore": 3095,
+    "loseScore": 3058,
+    "note": null
+  },
+  {
+    "date": "2024-07-02",
+    "map": "The Sacrifice",
+    "winners": [
+      "pratik",
+      "tjong",
+      "emil",
+      "sundeep"
+    ],
+    "losers": [
+      "calvin",
+      "daniel",
+      "clarence",
+      "jacob"
+    ],
+    "winScore": 1598,
+    "loseScore": 816,
+    "note": null
+  },
+  {
+    "date": "2024-07-03",
+    "map": "The Parish",
+    "winners": [
+      "pratik",
+      "jacob",
+      "sundeep",
+      "emil"
+    ],
+    "losers": [
+      "calvin",
+      "jaden",
+      "eric",
+      "tjong"
+    ],
+    "winScore": 3187,
+    "loseScore": 2265,
+    "note": null
+  },
+  {
+    "date": "2024-07-03",
+    "map": "The Last Stand",
+    "winners": [
+      "calvin",
+      "jaden",
+      "tjong",
+      "sundeep"
+    ],
+    "losers": [
+      "pratik",
+      "hanosh",
+      "jacob",
+      "eric"
+    ],
+    "winScore": 866,
+    "loseScore": 326,
+    "note": null
+  },
+  {
+    "date": "2024-07-07",
+    "map": "No Mercy",
+    "winners": [
+      "jaden",
+      "emil",
+      "sundeep",
+      "pratik"
+    ],
+    "losers": [
+      "daniel",
+      "jacob",
+      "tjong",
+      "jeffrey"
+    ],
+    "winScore": 3353,
+    "loseScore": 2264,
+    "note": null
+  },
+  {
+    "date": "2024-07-08",
+    "map": "Dark Carnival",
+    "winners": [
+      "pratik",
+      "jaden",
+      "jacob",
+      "emil"
+    ],
+    "losers": [
+      "daniel",
+      "calvin",
+      "sundeep",
+      "eric"
+    ],
+    "winScore": 3203,
+    "loseScore": 3179,
+    "note": null
+  },
+  {
+    "date": "2024-07-08",
+    "map": "Dead Air",
+    "winners": [
+      "jacob",
+      "greg",
+      "paul",
+      "sundeep"
+    ],
+    "losers": [
+      "pratik",
+      "calvin",
+      "jeffrey",
+      "jaden"
+    ],
+    "winScore": 2529,
+    "loseScore": 2448,
+    "note": null
+  },
+  {
+    "date": "2024-07-09",
+    "map": "Hard Rain",
+    "winners": [
+      "pratik",
+      "calvin",
+      "sundeep",
+      "eric"
+    ],
+    "losers": [
+      "jaden",
+      "jacob",
+      "tjong",
+      "emil"
+    ],
+    "winScore": 2916,
+    "loseScore": 2268,
+    "note": null
+  },
+  {
+    "date": "2024-07-11",
+    "map": "The Parish",
+    "winners": [
+      "daniel",
+      "clarence",
+      "jacob",
+      "emil"
+    ],
+    "losers": [
+      "jaden",
+      "sundeep",
+      "tjong",
+      "varun"
+    ],
+    "winScore": 2538,
+    "loseScore": 2165,
+    "note": null
+  },
+  {
+    "date": "2024-07-14",
+    "map": "No Mercy",
+    "winners": [
+      "pratik",
+      "clarence",
+      "daniel",
+      "emil"
+    ],
+    "losers": [
+      "jacob",
+      "eric",
+      "calvin",
+      "sundeep"
+    ],
+    "winScore": 3199,
+    "loseScore": 2623,
+    "note": null
+  },
+  {
+    "date": "2024-07-14",
+    "map": "Dead Center",
+    "winners": [
+      "pratik",
+      "clarence",
+      "jacob",
+      "varun"
+    ],
+    "losers": [
+      "eric",
+      "calvin",
+      "daniel",
+      "sundeep"
+    ],
+    "winScore": 3050,
+    "loseScore": 1968,
+    "note": null
+  },
+  {
+    "date": "2024-07-16",
+    "map": "Cold Stream",
+    "winners": [
+      "clarence",
+      "daniel",
+      "pratik",
+      "sundeep"
+    ],
+    "losers": [
+      "jacob",
+      "jaden",
+      "eric",
+      "emil"
+    ],
+    "winScore": 2853,
+    "loseScore": 1561,
+    "note": null
+  },
+  {
+    "date": "2024-07-16",
+    "map": "The Sacrifice",
+    "winners": [
+      "jaden",
+      "sundeep",
+      "jacob",
+      "emil"
+    ],
+    "losers": [
+      "pratik",
+      "calvin",
+      "eric",
+      "tjong"
+    ],
+    "winScore": 2075,
+    "loseScore": 995,
+    "note": null
+  },
+  {
+    "date": "2024-07-17",
+    "map": "Dark Carnival",
+    "winners": [
+      "jaden",
+      "clarence",
+      "pratik",
+      "tjong"
+    ],
+    "losers": [
+      "sundeep",
+      "jacob",
+      "emil",
+      "calvin"
+    ],
+    "winScore": 3500,
+    "loseScore": 2151,
+    "note": null
+  },
+  {
+    "date": "2024-07-18",
+    "map": "The Passing",
+    "winners": [
+      "pratik",
+      "calvin",
+      "emil",
+      "tjong"
+    ],
+    "losers": [
+      "jacob",
+      "daniel",
+      "jaden",
+      "eric"
+    ],
+    "winScore": 1924,
+    "loseScore": 770,
+    "note": null
+  },
+  {
+    "date": "2024-07-20",
+    "map": "Dead Air",
+    "winners": [
+      "clarence",
+      "jaden",
+      "sundeep",
+      "eric"
+    ],
+    "losers": [
+      "jacob",
+      "emil",
+      "pratik",
+      "calvin"
+    ],
+    "winScore": 2741,
+    "loseScore": 2532,
+    "note": null
+  },
+  {
+    "date": "2025-01-27",
+    "map": "Cold Stream",
+    "winners": [
+      "calvin",
+      "clarence",
+      "edmund",
+      "jacob"
+    ],
+    "losers": [
+      "pratik",
+      "eric",
+      "jeffrey",
+      "jaden"
+    ],
+    "winScore": 2918,
+    "loseScore": 2333,
+    "note": null
+  },
+  {
+    "date": "2026-03-11",
+    "map": "Cold Stream",
+    "winners": [
+      "pratik",
+      "clarence",
+      "jacob",
+      "varun"
+    ],
+    "losers": [
+      "calvin",
+      "jaden",
+      "emil",
+      "eric"
+    ],
+    "winScore": 2830,
+    "loseScore": 2129,
+    "note": null
+  },
+  {
+    "date": "2026-03-19",
+    "map": "Dead Center",
+    "winners": [
+      "varun",
+      "emil",
+      "pratik",
+      "jacob"
+    ],
+    "losers": [
+      "jaden",
+      "sundeep",
+      "hanosh",
+      "greg"
+    ],
+    "winScore": 2496,
+    "loseScore": 1662,
+    "note": null
+  },
+  {
+    "date": "2026-05-23",
+    "map": "No Mercy",
+    "winners": [
+      "jeffrey",
+      "pratik",
+      "jaden",
+      "varun"
+    ],
+    "losers": [
+      "eric",
+      "jacob",
+      "sundeep",
+      "emil"
+    ],
+    "winScore": 2574,
+    "loseScore": 2060,
+    "note": null
+  },
+  {
+    "date": "2026-06-12",
+    "map": "Blood Harvest",
+    "winners": [
+      "pratik",
+      "emil",
+      "jaden",
+      "clarence"
+    ],
+    "losers": [
+      "jacob",
+      "varun",
+      "jeffrey",
+      "calvin"
+    ],
+    "winScore": 3186,
+    "loseScore": 1568,
+    "note": null
+  },
+  {
+    "date": "2026-06-12",
+    "map": "The Sacrifice",
+    "winners": [
+      "jacob",
+      "jaden",
+      "emil",
+      "jeffrey"
+    ],
+    "losers": [
+      "pratik",
+      "clarence",
+      "varun",
+      "calvin"
+    ],
+    "winScore": 1211,
+    "loseScore": 1010,
+    "note": null
+  },
+  {
+    "date": "2026-06-21",
+    "map": "Dead Air",
+    "winners": [
+      "jaden",
+      "pratik",
+      "sundeep",
+      "emil"
+    ],
+    "losers": [
+      "calvin",
+      "tjong",
+      "jacob",
+      "eric"
+    ],
+    "winScore": 3118,
+    "loseScore": 1954,
+    "note": null
+  },
+  {
+    "date": "2026-06-22",
+    "map": "Dark Carnival",
+    "winners": [
+      "tjong",
+      "jacob",
+      "emil",
+      "sundeep"
+    ],
+    "losers": [
+      "pratik",
+      "clarence",
+      "jaden",
+      "varun"
+    ],
+    "winScore": 3117,
+    "loseScore": 3021,
+    "note": null
+  },
+  {
+    "date": "2026-06-26",
+    "map": "Death Toll",
+    "winners": [
+      "calvin",
+      "clarence",
+      "emil",
+      "tjong"
+    ],
+    "losers": [
+      "varun",
+      "sundeep",
+      "jacob",
+      "jeffrey"
+    ],
+    "winScore": 3140,
+    "loseScore": 1394,
+    "note": null
+  },
+  {
+    "date": "2026-06-30",
+    "map": "The Parish",
+    "winners": [
+      "pratik",
+      "varun",
+      "sundeep",
+      "jaden"
+    ],
+    "losers": [
+      "clarence",
+      "calvin",
+      "jacob",
+      "emil"
+    ],
+    "winScore": 3191,
+    "loseScore": 2791,
+    "note": null
+  },
+  {
+    "date": "2026-07-01",
+    "map": "No Mercy",
+    "winners": [
+      "jaden",
+      "pratik",
+      "jeffrey",
+      "emil"
+    ],
+    "losers": [
+      "eric",
+      "sundeep",
+      "calvin",
+      "jacob"
+    ],
+    "winScore": 2857,
+    "loseScore": 1908,
+    "note": null
+  }
+]
