@@ -43,9 +43,9 @@ describe("expectedScore", () => {
 });
 
 describe("ratingDelta", () => {
-  it("even match: winner +16, loser -16 at K=32", () => {
-    expect(ratingDelta(1000, 1000, true)).toBe(16);
-    expect(ratingDelta(1000, 1000, false)).toBe(-16);
+  it("even match: winner +32, loser -32 at K=64", () => {
+    expect(ratingDelta(1000, 1000, true)).toBe(32);
+    expect(ratingDelta(1000, 1000, false)).toBe(-32);
   });
 
   it("beating a stronger team gains more than beating a weaker one", () => {
@@ -60,7 +60,7 @@ describe("ratingDelta", () => {
 });
 
 describe("applyMatch", () => {
-  it("even 4v4: winners +16, losers -16, zero-sum", () => {
+  it("even 4v4: winners +32, losers -32, zero-sum", () => {
     const rows = applyMatch(
       team(1000, 1000, 1000, 1000),
       team(1000, 1000, 1000, 1000),
@@ -69,8 +69,8 @@ describe("applyMatch", () => {
     expect(rows).toHaveLength(8);
     const a = rows.filter((r) => r.side === "A");
     const b = rows.filter((r) => r.side === "B");
-    expect(a.every((r) => r.delta === 16)).toBe(true);
-    expect(b.every((r) => r.delta === -16)).toBe(true);
+    expect(a.every((r) => r.delta === 32)).toBe(true);
+    expect(b.every((r) => r.delta === -32)).toBe(true);
     const totalDelta = rows.reduce((s, r) => s + r.delta, 0);
     expect(totalDelta).toBe(0);
   });
@@ -94,12 +94,12 @@ describe("applyMatch", () => {
     const rows = applyMatch(team(900, 900), team(1100, 1100), "A");
     const winDelta = rows.find((r) => r.side === "A")!.delta;
     const loseDelta = rows.find((r) => r.side === "B")!.delta;
-    expect(winDelta).toBeGreaterThan(16); // upset → more than the even-match 16
+    expect(winDelta).toBeGreaterThan(32); // upset → more than the even-match 32
     expect(winDelta).toBe(-loseDelta); // symmetric
   });
 
   it("uses expected constants", () => {
     expect(BASE_MMR).toBe(1000);
-    expect(K_FACTOR).toBe(32);
+    expect(K_FACTOR).toBe(64);
   });
 });

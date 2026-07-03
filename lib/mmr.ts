@@ -5,8 +5,8 @@
 /** Starting rating for every player (and every new guest). */
 export const BASE_MMR = 1000;
 
-/** How much rating moves per match. Higher = faster swings. Chess standard. */
-export const K_FACTOR = 32;
+/** How much rating moves per match. Higher = faster swings. */
+export const K_FACTOR = 64;
 
 /** Elo logistic scale. 400 = a 400-point gap ≈ 10:1 expected win odds. */
 const ELO_SCALE = 400;
