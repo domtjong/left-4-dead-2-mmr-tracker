@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { X } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import PlayerCombobox from "@/components/matchup/PlayerCombobox";
 import { cn, glassCard } from "@/lib/utils";
@@ -48,9 +49,13 @@ function TeamColumn({
         )}
       </div>
       {winPct !== undefined && (
-        <div className="flex items-center justify-between rounded-lg bg-white/[0.03] px-3 py-1.5 text-xs">
-          <span className="text-white/50">Win chance</span>
-          <span className={cn("font-semibold", accent)}>{winPct}%</span>
+        <div className="grid animate-row-expand">
+          <div className="min-h-0 overflow-hidden">
+            <div className="flex items-center justify-between rounded-lg bg-white/[0.03] px-3 py-1.5 text-xs">
+              <span className="text-white/50">Win chance</span>
+              <span className={cn("font-semibold", accent)}>{winPct}%</span>
+            </div>
+          </div>
         </div>
       )}
 
@@ -70,14 +75,18 @@ function TeamColumn({
       })}
 
       {win !== undefined && loss !== undefined && (
-        <div className="rounded-lg border border-white/10 bg-black/20 p-3 text-sm">
-          <div className="flex justify-between">
-            <span className="text-white/50">If win</span>
-            <span className="font-semibold text-emerald-400">+{win} each</span>
-          </div>
-          <div className="mt-1 flex justify-between">
-            <span className="text-white/50">If loss</span>
-            <span className="font-semibold text-red-400">{loss} each</span>
+        <div className="grid animate-row-expand">
+          <div className="min-h-0 overflow-hidden">
+            <div className="rounded-lg border border-white/10 bg-black/20 p-3 text-sm">
+              <div className="flex justify-between">
+                <span className="text-white/50">If win</span>
+                <span className="font-semibold text-emerald-400">+{win} each</span>
+              </div>
+              <div className="mt-1 flex justify-between">
+                <span className="text-white/50">If loss</span>
+                <span className="font-semibold text-red-400">{loss} each</span>
+              </div>
+            </div>
           </div>
         </div>
       )}
@@ -120,13 +129,30 @@ export default function MatchupPreview({ players }: { players: Player[] }) {
     (set: (fn: (prev: string[]) => string[]) => void) => (i: number, value: string) =>
       set((prev) => prev.map((n, idx) => (idx === i ? value : n)));
 
+  const anyFilled = taken.size > 0;
+  const clearAll = () => {
+    setTeamA(["", "", "", ""]);
+    setTeamB(["", "", "", ""]);
+  };
+
   return (
     <Card className={glassCard}>
-      <CardHeader>
-        <CardTitle className="font-display text-lg font-bold text-white">Matchup preview</CardTitle>
-        <p className="text-xs text-white/40">
-          What each side gains or loses — before you log the game.
-        </p>
+      <CardHeader className="flex flex-row items-start justify-between gap-3 space-y-0">
+        <div className="space-y-1">
+          <CardTitle className="font-display text-lg font-bold text-white">Matchup preview</CardTitle>
+          <p className="text-xs text-white/40">
+            What each side gains or loses — before you log the game.
+          </p>
+        </div>
+        {anyFilled && (
+          <button
+            type="button"
+            onClick={clearAll}
+            className="flex shrink-0 items-center gap-1 rounded-lg px-2 py-1.5 text-xs text-white/50 transition hover:bg-white/10 hover:text-white"
+          >
+            <X size={13} /> Clear all
+          </button>
+        )}
       </CardHeader>
       <CardContent>
         <div className="flex flex-col gap-6 sm:flex-row sm:items-start">
