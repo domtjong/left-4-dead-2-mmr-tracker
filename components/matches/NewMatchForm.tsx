@@ -9,6 +9,60 @@ import { logMatch, type LogMatchResult } from "@/app/(app)/matches/new/actions";
 
 const SLOTS = [0, 1, 2, 3] as const;
 
+const inputCls =
+  "w-full rounded-lg border border-white/10 bg-black/30 px-3 py-2 text-sm text-white placeholder:text-white/30 outline-none transition focus:border-l4d2-purple/60 focus:ring-1 focus:ring-l4d2-purple/40";
+
+// Module-level so its identity is stable across renders. Defined inside the
+// component, every keystroke re-created it → React remounted the inputs → the
+// field lost focus after one character.
+function TeamColumn({
+  title,
+  side,
+  names,
+  accent,
+  players,
+  chosen,
+  onName,
+}: {
+  title: string;
+  side: "w" | "l";
+  names: string[];
+  accent: string;
+  players: string[];
+  chosen: Set<string>;
+  onName: (side: "w" | "l", i: number, v: string) => void;
+}) {
+  return (
+    <div className="flex-1 space-y-3">
+      <div className={cn("text-xs font-semibold uppercase tracking-widest", accent)}>{title}</div>
+      {SLOTS.map((i) => {
+        // Everyone taken except this slot's own current pick.
+        const taken = new Set(chosen);
+        taken.delete(names[i].trim().toLowerCase());
+        const options = players.filter((p) => !taken.has(p.toLowerCase()));
+        const listId = `player-list-${side}-${i}`;
+        return (
+          <div key={i}>
+            <input
+              list={listId}
+              value={names[i]}
+              onChange={(e) => onName(side, i, e.target.value)}
+              placeholder={`Player ${i + 1}`}
+              className={inputCls}
+              autoComplete="off"
+            />
+            <datalist id={listId}>
+              {options.map((p) => (
+                <option key={p} value={p} />
+              ))}
+            </datalist>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
 export default function NewMatchForm({
   players,
   maps,
@@ -61,54 +115,11 @@ export default function NewMatchForm({
     }
   }
 
-  const inputCls =
-    "w-full rounded-lg border border-white/10 bg-black/30 px-3 py-2 text-sm text-white placeholder:text-white/30 outline-none transition focus:border-l4d2-purple/60 focus:ring-1 focus:ring-l4d2-purple/40";
-
   // Names already chosen anywhere in the match, so each slot can drop them from
   // its own suggestion list (like the matchup preview on the home page). Kept as
   // a datalist — not a strict combobox — so a brand-new name still adds a guest.
   const chosen = new Set(
     [...winners, ...losers].map((n) => n.trim().toLowerCase()).filter(Boolean),
-  );
-
-  const TeamColumn = ({
-    title,
-    side,
-    names,
-    accent,
-  }: {
-    title: string;
-    side: "w" | "l";
-    names: string[];
-    accent: string;
-  }) => (
-    <div className="flex-1 space-y-3">
-      <div className={cn("text-xs font-semibold uppercase tracking-widest", accent)}>{title}</div>
-      {SLOTS.map((i) => {
-        // Everyone taken except this slot's own current pick.
-        const taken = new Set(chosen);
-        taken.delete(names[i].trim().toLowerCase());
-        const options = players.filter((p) => !taken.has(p.toLowerCase()));
-        const listId = `player-list-${side}-${i}`;
-        return (
-          <div key={i}>
-            <input
-              list={listId}
-              value={names[i]}
-              onChange={(e) => setName(side, i, e.target.value)}
-              placeholder={`Player ${i + 1}`}
-              className={inputCls}
-              autoComplete="off"
-            />
-            <datalist id={listId}>
-              {options.map((p) => (
-                <option key={p} value={p} />
-              ))}
-            </datalist>
-          </div>
-        );
-      })}
-    </div>
   );
 
   return (
@@ -121,9 +132,25 @@ export default function NewMatchForm({
       </CardHeader>
       <CardContent className="space-y-6">
         <div className="flex flex-col gap-6 sm:flex-row">
-          <TeamColumn title="Winners" side="w" names={winners} accent="text-emerald-400" />
+          <TeamColumn
+            title="Winners"
+            side="w"
+            names={winners}
+            accent="text-emerald-400"
+            players={players}
+            chosen={chosen}
+            onName={setName}
+          />
           <div className="hidden w-px self-stretch bg-white/10 sm:block" />
-          <TeamColumn title="Losers" side="l" names={losers} accent="text-red-400" />
+          <TeamColumn
+            title="Losers"
+            side="l"
+            names={losers}
+            accent="text-red-400"
+            players={players}
+            chosen={chosen}
+            onName={setName}
+          />
         </div>
 
         <div className="flex flex-col gap-4 sm:flex-row">
