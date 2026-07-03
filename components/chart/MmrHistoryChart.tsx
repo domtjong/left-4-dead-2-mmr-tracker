@@ -75,7 +75,9 @@ export default function MmrHistoryChart({
   // Plot the picked players (among those who've played).
   const active = played.filter((p) => selected.has(p.name));
   const colorOf = (name: string) =>
-    PALETTE[active.findIndex((p) => p.name === name) % PALETTE.length];
+    name === "mevan"
+      ? "#000000"
+      : PALETTE[active.findIndex((p) => p.name === name) % PALETTE.length];
 
   return (
     <Card className={glassCard}>
