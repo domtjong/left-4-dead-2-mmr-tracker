@@ -194,7 +194,13 @@ export default function MatchHistory({ matches }: { matches: HistoryMatch[] }) {
                 </span>
               </button>
 
-              {isOpen && (
+              <div
+                className={cn(
+                  "grid transition-[grid-template-rows] duration-300 ease-out",
+                  isOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]",
+                )}
+              >
+                <div className="overflow-hidden">
                 <div className="bg-black/20 px-4 py-4">
                   {/* Match summary: score + pre-game win chance of each side */}
                   <div className="mb-3 flex flex-wrap items-center gap-x-6 gap-y-1 text-xs">
@@ -253,7 +259,8 @@ export default function MatchHistory({ matches }: { matches: HistoryMatch[] }) {
                     </button>
                   </div>
                 </div>
-              )}
+                </div>
+              </div>
             </div>
           );
         })}

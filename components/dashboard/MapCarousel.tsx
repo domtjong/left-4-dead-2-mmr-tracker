@@ -13,6 +13,7 @@ export type MapSlide = {
 
 export default function MapCarousel({ slides }: { slides: MapSlide[] }) {
   const [i, setI] = useState(0);
+  const [dir, setDir] = useState(1); // 1 = advanced forward, -1 = went back
 
   if (slides.length === 0) {
     return (
@@ -25,8 +26,12 @@ export default function MapCarousel({ slides }: { slides: MapSlide[] }) {
   }
 
   const n = slides.length;
-  const go = (d: number) => setI((prev) => (prev + d + n) % n); // infinite wrap
+  const go = (d: number) => {
+    setDir(d);
+    setI((prev) => (prev + d + n) % n); // infinite wrap
+  };
   const s = slides[i];
+  const anim = dir === 1 ? "animate-slide-right" : "animate-slide-left";
 
   return (
     <Card className={cn(glassCard, glassCardHover)}>
@@ -48,7 +53,7 @@ export default function MapCarousel({ slides }: { slides: MapSlide[] }) {
           >
             <ChevronLeft size={18} />
           </button>
-          <div key={i} className="animate-card-fade-up min-w-0 flex-1 text-center">
+          <div key={i} className={cn(anim, "min-w-0 flex-1 text-center")}>
             <div className="truncate font-display text-lg font-bold tracking-tight text-white">
               {s.map}
             </div>
@@ -63,7 +68,7 @@ export default function MapCarousel({ slides }: { slides: MapSlide[] }) {
           </button>
         </div>
 
-        <div key={`stats-${i}`} className="animate-card-fade-up mt-2 space-y-1 text-xs">
+        <div key={`stats-${i}`} className={cn(anim, "mt-2 space-y-1 text-xs")}>
           {s.best && (
             <div className="flex items-center justify-between gap-2">
               <span className="text-white/50">Best</span>
