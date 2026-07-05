@@ -78,6 +78,7 @@ export default function NewMatchForm({
   const [winScore, setWinScore] = useState("");
   const [loseScore, setLoseScore] = useState("");
   const [note, setNote] = useState("");
+  const [pin, setPin] = useState("");
   const [pending, setPending] = useState(false);
   const [result, setResult] = useState<LogMatchResult | null>(null);
 
@@ -88,12 +89,13 @@ export default function NewMatchForm({
 
   const filled = [...winners, ...losers].map((n) => n.trim().toLowerCase()).filter(Boolean);
   const dupes = filled.length !== new Set(filled).size;
-  const ready = filled.length === 8 && !dupes && !!map;
+  const ready = filled.length === 8 && !dupes && !!map && !!pin.trim();
 
   async function submit() {
     setPending(true);
     setResult(null);
     const res = await logMatch({
+      pin,
       winners,
       losers,
       map,
@@ -111,6 +113,7 @@ export default function NewMatchForm({
       setWinScore("");
       setLoseScore("");
       setNote("");
+      setPin("");
       router.refresh();
     }
   }
@@ -223,6 +226,19 @@ export default function NewMatchForm({
         {dupes && (
           <p className="text-sm text-amber-400">A player can’t appear twice in one match.</p>
         )}
+
+        <label className="block space-y-1">
+          <span className="text-xs font-semibold uppercase tracking-widest text-white/50">PIN</span>
+          <input
+            type="password"
+            inputMode="numeric"
+            value={pin}
+            onChange={(e) => setPin(e.target.value)}
+            placeholder="Enter PIN"
+            className={cn(inputCls, "max-w-[10rem]")}
+            autoComplete="off"
+          />
+        </label>
 
         <Button
           onClick={submit}

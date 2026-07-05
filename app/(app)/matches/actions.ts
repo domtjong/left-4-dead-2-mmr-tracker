@@ -5,6 +5,7 @@ import { createClient } from "@/utils/supabase/server";
 import { applyMatch, BASE_MMR, type PlayerRating, type Side } from "@/lib/mmr";
 import { fetchAllRows } from "@/lib/db";
 import { logEvent, logError } from "@/lib/log";
+import { isValidPin } from "@/lib/pin";
 
 export type DeleteMatchResult = { ok: true } | { ok: false; error: string };
 
@@ -17,7 +18,12 @@ export type DeleteMatchResult = { ok: true } | { ok: false; error: string };
  * order, rewriting match_players before/after/delta and every player's
  * current_mmr. Correct and simple; the log is small (a few hundred matches).
  */
-export async function deleteMatch(id: string): Promise<DeleteMatchResult> {
+export async function deleteMatch(id: string, pin: string): Promise<DeleteMatchResult> {
+  if (!isValidPin(pin)) {
+    logEvent("match.delete.rejected", { id, reason: "invalid_pin" });
+    return { ok: false, error: "Wrong PIN." };
+  }
+
   const db = await createClient();
 
   // Capture what we're deleting so the log shows the match, not just an id.

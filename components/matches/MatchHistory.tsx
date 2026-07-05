@@ -167,6 +167,7 @@ export default function MatchHistory({ matches }: { matches: HistoryMatch[] }) {
   const [player, setPlayer] = useState("");
   const [map, setMap] = useState("");
   const [confirmId, setConfirmId] = useState<string | null>(null);
+  const [pin, setPin] = useState("");
   const [err, setErr] = useState<string | null>(null);
   const [pending, startTransition] = useTransition();
 
@@ -176,9 +177,10 @@ export default function MatchHistory({ matches }: { matches: HistoryMatch[] }) {
     if (!confirmId) return;
     setErr(null);
     startTransition(async () => {
-      const res = await deleteMatch(confirmId);
+      const res = await deleteMatch(confirmId, pin);
       if (res.ok) {
         setConfirmId(null);
+        setPin("");
         router.refresh();
       } else {
         setErr(res.error);
@@ -274,6 +276,7 @@ export default function MatchHistory({ matches }: { matches: HistoryMatch[] }) {
             m={m}
             onRequestDelete={(id) => {
               setErr(null);
+              setPin("");
               setConfirmId(id);
             }}
           />
@@ -314,6 +317,19 @@ export default function MatchHistory({ matches }: { matches: HistoryMatch[] }) {
               </span>
             </div>
           </div>
+          <label className="mt-3 block space-y-1">
+            <span className="text-xs font-semibold uppercase tracking-widest text-white/50">PIN</span>
+            <input
+              type="password"
+              inputMode="numeric"
+              value={pin}
+              onChange={(e) => setPin(e.target.value)}
+              placeholder="Enter PIN"
+              autoComplete="off"
+              className="w-full max-w-[10rem] rounded-lg border border-white/10 bg-black/30 px-3 py-1.5 text-sm text-white placeholder:text-white/30 outline-none transition focus:border-l4d2-purple/60"
+            />
+          </label>
+
           {err && <p className="mt-2 text-xs text-red-400">{err}</p>}
           <div className="mt-4 flex justify-end gap-2">
             <button
@@ -326,7 +342,7 @@ export default function MatchHistory({ matches }: { matches: HistoryMatch[] }) {
             </button>
             <button
               type="button"
-              disabled={pending}
+              disabled={pending || !pin.trim()}
               onClick={onConfirmDelete}
               className="rounded-lg bg-red-500/90 px-3 py-1.5 text-sm font-medium text-white transition hover:bg-red-500 disabled:opacity-50"
             >

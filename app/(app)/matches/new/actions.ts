@@ -5,8 +5,10 @@ import { createClient } from "@/utils/supabase/server";
 import { applyMatch, BASE_MMR, type PlayerRating } from "@/lib/mmr";
 import { MAPS } from "@/lib/l4d2";
 import { logEvent, logError } from "@/lib/log";
+import { isValidPin } from "@/lib/pin";
 
 export type LogMatchInput = {
+  pin: string;
   winners: string[]; // 4 player names
   losers: string[]; // 4 player names
   map: string;
@@ -34,6 +36,11 @@ export async function logMatch(input: LogMatchInput): Promise<LogMatchResult> {
     loseScore: input.loseScore ?? null,
     note: input.note?.trim() || null,
   });
+
+  if (!isValidPin(input.pin)) {
+    logEvent("match.new.rejected", { reason: "invalid_pin" });
+    return { ok: false, error: "Wrong PIN." };
+  }
 
   // --- validation ---
   if (all.length !== 8 || all.some((n) => !n)) {
