@@ -227,7 +227,7 @@ export default function NewMatchForm({
           <p className="text-sm text-amber-400">A player can’t appear twice in one match.</p>
         )}
 
-        <label className="block space-y-1">
+        <label className="block space-y-2">
           <span className="text-xs font-semibold uppercase tracking-widest text-white/50">PIN</span>
           <input
             type="password"

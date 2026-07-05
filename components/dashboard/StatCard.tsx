@@ -33,7 +33,7 @@ export default function StatCard({
         <span className="text-xs font-medium uppercase tracking-widest text-white/50">
           {label}
         </span>
-        <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-l4d2-purple/15 text-l4d2-purple">
+        <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-l4d2-purple/15 text-l4d2-purple">
           <Icon size={18} strokeWidth={2.25} />
         </span>
       </CardHeader>

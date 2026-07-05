@@ -1,12 +1,12 @@
 "use client";
 
 import {
-  AlignJustify,
   Home,
   FilePlus2,
   Skull,
   Table,
   LineChart,
+  Scale,
   Settings,
   type LucideIcon,
 } from "lucide-react";
@@ -23,7 +23,7 @@ type NavItem = {
 const navItems: NavItem[] = [
   { label: "Home", icon: Home, href: "/" },
   { label: "New match", icon: FilePlus2, href: "/matches/new" },
-  { label: "Gang", icon: Skull, href: "/gangs" },
+  { label: "Balance teams", icon: Scale, href: "/balance" },
   { label: "Match history", icon: Table, href: "/matches" },
   { label: "MMR chart", icon: LineChart, href: "/chart" },
 ];
@@ -79,15 +79,6 @@ export default function Sidebar() {
         <Skull size={24} strokeWidth={2.5} />
       </div>
 
-      {/* Menu toggle */}
-      <button
-        type="button"
-        aria-label="Toggle menu"
-        className="rounded-lg p-2 text-white/60 transition hover:bg-white/10 hover:text-white"
-      >
-        <AlignJustify size={22} strokeWidth={2.25} />
-      </button>
-
       {/* Primary nav */}
       <nav className="flex flex-col items-center gap-4">
         {navItems.map((item) => (
@@ -95,8 +86,25 @@ export default function Sidebar() {
         ))}
       </nav>
 
-      {/* Footer: settings */}
-      <div className="mt-auto">
+      {/* Footer: Gang (coming soon) + settings */}
+      <div className="mt-auto flex flex-col items-center gap-4">
+        {/* Dimmed to read as an upcoming feature; page itself says "coming soon". */}
+        <Link
+          href="/gangs"
+          aria-label="Gang — coming soon"
+          aria-current={isActive("/gangs") ? "page" : undefined}
+          className="group relative flex items-center justify-center"
+        >
+          <span className="flex h-12 w-12 items-center justify-center rounded-xl text-white/30 transition hover:bg-white/5 hover:text-white/60">
+            <Skull size={24} strokeWidth={2.25} />
+          </span>
+          <span className="pointer-events-none absolute right-full mr-3 flex items-center gap-1.5 whitespace-nowrap rounded-md bg-black/85 px-2.5 py-1 text-xs font-medium text-white opacity-0 shadow-lg backdrop-blur transition group-hover:opacity-100">
+            Gang
+            <span className="rounded bg-l4d2-purple/30 px-1.5 py-0.5 text-[10px] uppercase tracking-wide text-l4d2-purple">
+              soon
+            </span>
+          </span>
+        </Link>
         <button
           type="button"
           aria-label="Settings"
