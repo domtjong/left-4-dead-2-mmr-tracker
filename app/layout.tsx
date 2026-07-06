@@ -1,4 +1,5 @@
 import { Oxanium, Open_Sans } from "next/font/google";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
 
 const oxanium = Oxanium({
@@ -37,6 +38,7 @@ export default function RootLayout({
         <main className="min-h-screen flex flex-col items-center">
           {children}
         </main>
+        <SpeedInsights />
       </body>
     </html>
   );

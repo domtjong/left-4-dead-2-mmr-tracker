@@ -1,6 +1,7 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { Dices } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { cn, glassCard } from "@/lib/utils";
 import { BASE_MMR, expectedScore, teamAverage } from "@/lib/mmr";
@@ -85,13 +86,14 @@ export default function TeamBalancer({ players }: { players: Player[] }) {
       const avgA = teamAverage(a.map((i) => ratings[i]));
       const avgB = teamAverage(b.map((i) => ratings[i]));
       const pA = expectedScore(avgA, avgB);
+      const teamA = { names: a.map((i) => clean[i]), avg: Math.round(avgA), pct: Math.round(pA * 100) };
+      const teamB = { names: b.map((i) => clean[i]), avg: Math.round(avgB), pct: Math.round((1 - pA) * 100) };
+      // Sides are symmetric; randomise which shows on the left so the
+      // first-entered player isn't always anchored to Team A.
+      const swap = Math.random() < 0.5;
       return {
-        a: a.map((i) => clean[i]),
-        b: b.map((i) => clean[i]),
-        avgA: Math.round(avgA),
-        avgB: Math.round(avgB),
-        pctA: Math.round(pA * 100),
-        pctB: Math.round((1 - pA) * 100),
+        left: swap ? teamB : teamA,
+        right: swap ? teamA : teamB,
         gap: Math.abs(Math.round(avgA - avgB)),
         skew: Math.abs(pA - 0.5), // distance from a coin flip; lower = fairer
       };
@@ -101,6 +103,10 @@ export default function TeamBalancer({ players }: { players: Player[] }) {
     // clean is derived from names each render; names is the real dependency.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ready, names, mmrByName]);
+
+  // Which option the dice picked. Reset whenever the split set changes.
+  const [picked, setPicked] = useState<number | null>(null);
+  useEffect(() => setPicked(null), [results]);
 
   return (
     <div className="space-y-6">
@@ -157,42 +163,69 @@ export default function TeamBalancer({ players }: { players: Player[] }) {
 
       {results.length > 0 && (
         <div className="space-y-4">
-          <h2 className="text-center text-xs font-semibold uppercase tracking-[0.3em] text-l4d2-purple">
-            3 most balanced splits
-          </h2>
-          {results.map((r, i) => (
-            <Card key={i} className={cn(glassCard, "mx-auto max-w-2xl")}>
-              <CardContent className="pt-6">
-                <div className="mb-3 flex items-center justify-between text-xs">
-                  <span className="font-semibold uppercase tracking-widest text-white/50">
-                    Option {i + 1}
-                  </span>
-                  <span className="text-white/40">
-                    MMR gap {r.gap} · {r.pctA}% / {r.pctB}% win
-                  </span>
-                </div>
-                <div className="flex flex-col gap-4 sm:flex-row sm:items-stretch">
-                  <TeamBox
-                    names={r.a}
-                    avg={r.avgA}
-                    pct={r.pctA}
-                    accent="text-l4d2-purple"
-                    ring="ring-l4d2-purple/30"
-                  />
-                  <div className="self-center text-xs font-bold uppercase tracking-widest text-white/30">
-                    vs
+          <div className="mx-auto flex max-w-2xl flex-col items-center justify-between gap-3 sm:flex-row">
+            <h2 className="text-xs font-semibold uppercase tracking-[0.3em] text-l4d2-purple">
+              3 most balanced splits
+            </h2>
+            <button
+              type="button"
+              onClick={() => setPicked(Math.floor(Math.random() * results.length))}
+              className="flex items-center gap-2 rounded-full border border-l4d2-purple/40 bg-l4d2-purple/15 px-4 py-1.5 text-xs font-semibold text-white transition hover:bg-l4d2-purple/25"
+            >
+              <Dices size={15} />
+              Pick one for us
+            </button>
+          </div>
+          {results.map((r, i) => {
+            const isPick = picked === i;
+            const dimmed = picked !== null && !isPick;
+            return (
+              <Card
+                key={i}
+                className={cn(
+                  glassCard,
+                  "mx-auto max-w-2xl transition",
+                  isPick && "ring-2 ring-l4d2-purple",
+                  dimmed && "opacity-50",
+                )}
+              >
+                <CardContent className="pt-6">
+                  <div className="mb-3 flex items-center justify-between text-xs">
+                    <span className="flex items-center gap-2 font-semibold uppercase tracking-widest text-white/50">
+                      Option {i + 1}
+                      {isPick && (
+                        <span className="rounded-full bg-l4d2-purple px-2 py-0.5 text-[10px] font-bold tracking-wide text-white">
+                          Selected
+                        </span>
+                      )}
+                    </span>
+                    <span className="text-white/40">
+                      MMR gap {r.gap} · {r.left.pct}% / {r.right.pct}% win
+                    </span>
                   </div>
-                  <TeamBox
-                    names={r.b}
-                    avg={r.avgB}
-                    pct={r.pctB}
-                    accent="text-cyan-400"
-                    ring="ring-cyan-400/30"
-                  />
-                </div>
-              </CardContent>
-            </Card>
-          ))}
+                  <div className="flex flex-col gap-4 sm:flex-row sm:items-stretch">
+                    <TeamBox
+                      names={r.left.names}
+                      avg={r.left.avg}
+                      pct={r.left.pct}
+                      accent="text-l4d2-purple"
+                      ring="ring-l4d2-purple/30"
+                    />
+                    <div className="self-center text-xs font-bold uppercase tracking-widest text-white/30">
+                      vs
+                    </div>
+                    <TeamBox
+                      names={r.right.names}
+                      avg={r.right.avg}
+                      pct={r.right.pct}
+                      accent="text-cyan-400"
+                      ring="ring-cyan-400/30"
+                    />
+                  </div>
+                </CardContent>
+              </Card>
+            );
+          })}
         </div>
       )}
     </div>

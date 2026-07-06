@@ -128,6 +128,9 @@ export default function MmrHistoryChart({
                 width={48}
               />
               <Tooltip
+                // Order the rows by MMR at that match (highest first) so the
+                // tooltip matches the lines' top-to-bottom order on the chart.
+                itemSorter={(item) => -(item.value as number)}
                 contentStyle={{
                   background: "rgba(15,15,18,0.95)",
                   border: "1px solid rgba(255,255,255,0.12)",
