@@ -73,11 +73,28 @@ export default function MmrHistoryChart({
     });
 
   // Plot the picked players (among those who've played).
-  const active = played.filter((p) => selected.has(p.name));
+  const active = useMemo(
+    () => played.filter((p) => selected.has(p.name)),
+    [played, selected],
+  );
   const colorOf = (name: string) =>
-    name === "mevan"
-      ? "#000000"
-      : PALETTE[active.findIndex((p) => p.name === name) % PALETTE.length];
+    PALETTE[active.findIndex((p) => p.name === name) % PALETTE.length];
+
+  // Carry each selected player's MMR forward across matches they sat out, so a
+  // hovered point shows everyone's current rating — not just that match's
+  // participants. Lines hold flat between games (MMR only moves on a played one).
+  const filled = useMemo(() => {
+    const last: Record<string, number> = {};
+    return rows.map((row) => {
+      const out: ChartRow = { idx: row.idx as number, date: row.date as string };
+      for (const p of active) {
+        const v = row[p.name];
+        if (typeof v === "number") last[p.name] = v;
+        if (last[p.name] !== undefined) out[p.name] = last[p.name];
+      }
+      return out;
+    });
+  }, [rows, active]);
 
   return (
     <Card className={glassCard}>
@@ -112,7 +129,7 @@ export default function MmrHistoryChart({
 
         <div className="h-[420px] w-full">
           <ResponsiveContainer width="100%" height="100%">
-            <LineChart data={rows} margin={{ top: 8, right: 16, bottom: 8, left: -8 }}>
+            <LineChart data={filled} margin={{ top: 8, right: 16, bottom: 8, left: -8 }}>
               <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.06)" />
               <XAxis
                 dataKey="idx"

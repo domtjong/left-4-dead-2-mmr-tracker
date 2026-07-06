@@ -52,20 +52,24 @@ export default async function ChartPage() {
     games: games.get(p.name) ?? 0,
   }));
 
-  const standings: StandingRow[] = (players ?? []).map((p, i) => {
-    const gp = games.get(p.name) ?? 0;
-    const w = wins.get(p.name) ?? 0;
-    return {
-      rank: i + 1,
-      name: p.name,
-      mmr: p.current_mmr,
-      isGuest: p.is_guest,
-      games: gp,
-      wins: w,
-      losses: gp - w,
-      winPct: gp ? Math.round((w / gp) * 100) : 0,
-    };
-  });
+  // Only rank players who have actually played — a player left with zero games
+  // (e.g. an orphan from a deleted match) should not show in the standings.
+  const standings: StandingRow[] = (players ?? [])
+    .filter((p) => (games.get(p.name) ?? 0) > 0)
+    .map((p, i) => {
+      const gp = games.get(p.name) ?? 0;
+      const w = wins.get(p.name) ?? 0;
+      return {
+        rank: i + 1,
+        name: p.name,
+        mmr: p.current_mmr,
+        isGuest: p.is_guest,
+        games: gp,
+        wins: w,
+        losses: gp - w,
+        winPct: gp ? Math.round((w / gp) * 100) : 0,
+      };
+    });
 
   return (
     <>

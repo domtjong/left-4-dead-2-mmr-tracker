@@ -29,11 +29,12 @@ export async function deleteMatch(id: string, pin: string): Promise<DeleteMatchR
   // Capture what we're deleting so the log shows the match, not just an id.
   const { data: doomed } = await db
     .from("matches")
-    .select("id, map, played_at, win_score, lose_score, note, match_players(side, players(name))")
+    .select("id, map, played_at, win_score, lose_score, note, match_players(side, player_id, players(name))")
     .eq("id", id)
     .single();
   const roster = (doomed?.match_players ?? []) as unknown as {
     side: string;
+    player_id: string;
     players: { name: string } | null;
   }[];
   logEvent("match.delete.request", {
@@ -137,6 +138,18 @@ export async function deleteMatch(id: string, pin: string): Promise<DeleteMatchR
     return { ok: false, error: upErr.message };
   }
 
+  // 6. A player whose only appearance was in the deleted match now has zero
+  // games. Remove those orphans (limited to this match's roster) so they don't
+  // linger in the standings / pickers with a phantom base rating.
+  const playedIds = new Set(newRows.map((r) => r.player_id));
+  const orphanIds = [...new Set(roster.map((r) => r.player_id))].filter(
+    (pid) => pid && !playedIds.has(pid),
+  );
+  if (orphanIds.length) {
+    const { error: orphErr } = await db.from("players").delete().in("id", orphanIds);
+    if (orphErr) logError("match.delete", orphErr, { id, step: "delete_orphans" });
+  }
+
   revalidatePath("/");
   revalidatePath("/matches");
   revalidatePath("/chart");
@@ -145,6 +158,7 @@ export async function deleteMatch(id: string, pin: string): Promise<DeleteMatchR
     matchesReplayed: matches.length,
     rowsWritten: newRows.length,
     playersUpdated: rating.size,
+    orphansRemoved: orphanIds.length,
   });
   return { ok: true };
 }
