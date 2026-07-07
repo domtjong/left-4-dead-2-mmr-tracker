@@ -1,15 +1,31 @@
 import TeamBalancer from "@/components/balance/TeamBalancer";
+import MapSuggester from "@/components/balance/MapSuggester";
 import { createClient } from "@/utils/supabase/server";
 import { unwrap } from "@/lib/db";
+import { MAPS, MAP_ACTS } from "@/lib/l4d2";
 
 export const dynamic = "force-dynamic";
 
 export default async function BalancePage() {
   const db = await createClient();
-  const players = await unwrap<{ name: string; current_mmr: number }[]>(
-    "players",
-    db.from("players").select("name, current_mmr").order("name", { ascending: true }),
-  );
+  const [players, matches] = await Promise.all([
+    unwrap<{ name: string; current_mmr: number }[]>(
+      "players",
+      db.from("players").select("name, current_mmr").order("name", { ascending: true }),
+    ),
+    unwrap<{ map: string; played_at: string }[]>(
+      "matches",
+      db.from("matches").select("map, played_at").order("played_at", { ascending: false }),
+    ),
+  ]);
+
+  // Most recent played date per map, and the maps of the last 3 matches (to
+  // exclude so a suggestion doesn't repeat what was just played).
+  const lastPlayed: Record<string, string> = {};
+  for (const m of matches) if (!(m.map in lastPlayed)) lastPlayed[m.map] = m.played_at;
+  const recentMaps = matches.slice(0, 3).map((m) => m.map);
+
+  const mapMeta = MAPS.map((name) => ({ name, acts: MAP_ACTS[name] }));
 
   return (
     <>
@@ -25,7 +41,10 @@ export default async function BalancePage() {
           instead of the game auto-balancing.
         </p>
       </header>
-      <TeamBalancer players={players.map((p) => ({ name: p.name, mmr: p.current_mmr }))} />
+      <div className="space-y-6">
+        <MapSuggester maps={mapMeta} lastPlayed={lastPlayed} recentMaps={recentMaps} />
+        <TeamBalancer players={players.map((p) => ({ name: p.name, mmr: p.current_mmr }))} />
+      </div>
     </>
   );
 }

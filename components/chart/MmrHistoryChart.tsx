@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import {
   CartesianGrid,
   Line,
@@ -96,6 +96,21 @@ export default function MmrHistoryChart({
     });
   }, [rows, active]);
 
+  // Track the chart's rendered width so we can reserve a right-hand gutter and
+  // pin the (now tall) tooltip there instead of letting it cover the lines.
+  // Too narrow (phones) → skip the gutter and let the tooltip float normally.
+  const wrapRef = useRef<HTMLDivElement>(null);
+  const [width, setWidth] = useState(0);
+  useEffect(() => {
+    const el = wrapRef.current;
+    if (!el) return;
+    const ro = new ResizeObserver((entries) => setWidth(entries[0].contentRect.width));
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
+  const wide = width >= 640;
+  const gutter = wide ? 190 : 16; // reserved right space for the pinned tooltip
+
   return (
     <Card className={glassCard}>
       <CardContent className="space-y-5 pt-6">
@@ -127,9 +142,9 @@ export default function MmrHistoryChart({
           />
         </div>
 
-        <div className="h-[420px] w-full">
+        <div ref={wrapRef} className="h-[420px] w-full">
           <ResponsiveContainer width="100%" height="100%">
-            <LineChart data={filled} margin={{ top: 8, right: 16, bottom: 8, left: -8 }}>
+            <LineChart data={filled} margin={{ top: 8, right: gutter, bottom: 8, left: -8 }}>
               <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.06)" />
               <XAxis
                 dataKey="idx"
@@ -148,6 +163,10 @@ export default function MmrHistoryChart({
                 // Order the rows by MMR at that match (highest first) so the
                 // tooltip matches the lines' top-to-bottom order on the chart.
                 itemSorter={(item) => -(item.value as number)}
+                // On wide screens, pin the tooltip in the reserved right gutter
+                // so it never covers the lines; otherwise let it follow the cursor.
+                position={wide ? { x: width - gutter + 6, y: 8 } : undefined}
+                allowEscapeViewBox={{ x: true, y: true }}
                 contentStyle={{
                   background: "rgba(15,15,18,0.95)",
                   border: "1px solid rgba(255,255,255,0.12)",
