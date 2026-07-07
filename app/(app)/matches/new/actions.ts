@@ -12,6 +12,7 @@ export type LogMatchInput = {
   winners: string[]; // 4 player names
   losers: string[]; // 4 player names
   map: string;
+  enteredBy: string; // who signed off on the entry (for auditing)
   playedAt?: string; // ISO date; defaults to now
   winScore?: number | null; // display only, not in MMR
   loseScore?: number | null;
@@ -26,9 +27,11 @@ export async function logMatch(input: LogMatchInput): Promise<LogMatchResult> {
   const winners = input.winners.map((n) => n.trim().toLowerCase());
   const losers = input.losers.map((n) => n.trim().toLowerCase());
   const all = [...winners, ...losers];
+  const enteredBy = input.enteredBy?.trim() || "";
 
   logEvent("match.new.request", {
     map: input.map,
+    enteredBy,
     playedAt: input.playedAt ?? null,
     winners,
     losers,
@@ -55,6 +58,10 @@ export async function logMatch(input: LogMatchInput): Promise<LogMatchResult> {
     logEvent("match.new.rejected", { reason: "invalid_map", map: input.map });
     return { ok: false, error: "Pick a valid map." };
   }
+  if (!enteredBy) {
+    logEvent("match.new.rejected", { reason: "missing_entered_by" });
+    return { ok: false, error: "Sign your name to confirm the match." };
+  }
 
   const db = await createClient();
 
@@ -64,7 +71,7 @@ export async function logMatch(input: LogMatchInput): Promise<LogMatchResult> {
     .select("id, name, current_mmr")
     .in("name", all);
   if (pErr) {
-    await logError("match.new", pErr, { step: "load_players" });
+    logError("match.new", pErr, { step: "load_players" });
     return { ok: false, error: pErr.message };
   }
 
@@ -76,7 +83,7 @@ export async function logMatch(input: LogMatchInput): Promise<LogMatchResult> {
       .insert(unknown.map((name) => ({ name, current_mmr: BASE_MMR, is_guest: true })))
       .select("id, name, current_mmr");
     if (cErr) {
-      await logError("match.new", cErr, { step: "create_guests", names: unknown });
+      logError("match.new", cErr, { step: "create_guests", names: unknown });
       return { ok: false, error: cErr.message };
     }
     created?.forEach((p) => byName.set(p.name, p));
@@ -100,6 +107,7 @@ export async function logMatch(input: LogMatchInput): Promise<LogMatchResult> {
       map: input.map,
       winning_side: "A",
       played_at: input.playedAt ?? new Date().toISOString(),
+      entered_by: enteredBy,
       win_score: input.winScore ?? null,
       lose_score: input.loseScore ?? null,
       note: input.note?.trim() || null,
@@ -107,7 +115,7 @@ export async function logMatch(input: LogMatchInput): Promise<LogMatchResult> {
     .select("id")
     .single();
   if (mErr || !match) {
-    await logError("match.new", mErr ?? "insert returned no row", { step: "insert_match" });
+    logError("match.new", mErr ?? "insert returned no row", { step: "insert_match" });
     return { ok: false, error: mErr?.message ?? "Failed to create match." };
   }
 
@@ -122,7 +130,7 @@ export async function logMatch(input: LogMatchInput): Promise<LogMatchResult> {
     })),
   );
   if (mpErr) {
-    await logError("match.new", mpErr, { step: "insert_match_players", matchId: match.id });
+    logError("match.new", mpErr, { step: "insert_match_players", matchId: match.id });
     return { ok: false, error: mpErr.message };
   }
 
@@ -133,7 +141,7 @@ export async function logMatch(input: LogMatchInput): Promise<LogMatchResult> {
   );
   const updateErr = updates.find((u) => u.error)?.error;
   if (updateErr) {
-    await logError("match.new", updateErr, { step: "update_ratings", matchId: match.id });
+    logError("match.new", updateErr, { step: "update_ratings", matchId: match.id });
     return { ok: false, error: updateErr.message };
   }
 
@@ -145,6 +153,7 @@ export async function logMatch(input: LogMatchInput): Promise<LogMatchResult> {
   logEvent("match.new.created", {
     matchId: match.id,
     map: input.map,
+    enteredBy,
     winners,
     losers,
     winScore: input.winScore ?? null,

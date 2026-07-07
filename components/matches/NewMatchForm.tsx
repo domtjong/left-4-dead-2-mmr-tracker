@@ -82,6 +82,7 @@ export default function NewMatchForm({
   const [pending, setPending] = useState(false);
   const [result, setResult] = useState<LogMatchResult | null>(null);
   const [confirming, setConfirming] = useState(false);
+  const [signer, setSigner] = useState(""); // who is entering the match
 
   const setName = (side: "w" | "l", i: number, v: string) => {
     const set = side === "w" ? setWinners : setLosers;
@@ -100,6 +101,7 @@ export default function NewMatchForm({
       winners,
       losers,
       map,
+      enteredBy: signer,
       playedAt: new Date(playedAt).toISOString(),
       winScore: winScore.trim() ? Number(winScore) : null,
       loseScore: loseScore.trim() ? Number(loseScore) : null,
@@ -115,6 +117,7 @@ export default function NewMatchForm({
       setLoseScore("");
       setNote("");
       setPin("");
+      setSigner("");
       setConfirming(false);
       router.refresh();
     }
@@ -297,6 +300,18 @@ export default function NewMatchForm({
                 </div>
               </div>
             </div>
+            <label className="block space-y-1">
+              <span className="text-xs font-semibold uppercase tracking-widest text-white/50">
+                Your name
+              </span>
+              <input
+                value={signer}
+                onChange={(e) => setSigner(e.target.value)}
+                placeholder="Who's entering this?"
+                className={inputCls}
+                autoComplete="off"
+              />
+            </label>
             <div className="flex gap-2">
               <button
                 type="button"
@@ -308,7 +323,7 @@ export default function NewMatchForm({
               </button>
               <Button
                 onClick={submit}
-                disabled={pending}
+                disabled={pending || !signer.trim()}
                 className="flex-1 bg-l4d2-purple text-white hover:bg-l4d2-violet"
               >
                 {pending ? "Saving…" : "Confirm & log match"}

@@ -51,7 +51,7 @@ export async function deleteMatch(id: string, pin: string): Promise<DeleteMatchR
   // 1. Remove the match. match_players rows cascade via FK.
   const { error: delErr } = await db.from("matches").delete().eq("id", id);
   if (delErr) {
-    await logError("match.delete", delErr, { id, step: "delete_match" });
+    logError("match.delete", delErr, { id, step: "delete_match" });
     return { ok: false, error: delErr.message };
   }
 
@@ -116,14 +116,14 @@ export async function deleteMatch(id: string, pin: string): Promise<DeleteMatchR
   // 4. Replace all match_players with the recomputed rows.
   const { error: wipeErr } = await db.from("match_players").delete().not("id", "is", null);
   if (wipeErr) {
-    await logError("match.delete", wipeErr, { id, step: "wipe_match_players" });
+    logError("match.delete", wipeErr, { id, step: "wipe_match_players" });
     return { ok: false, error: wipeErr.message };
   }
 
   for (let j = 0; j < newRows.length; j += 500) {
     const { error: insErr } = await db.from("match_players").insert(newRows.slice(j, j + 500));
     if (insErr) {
-      await logError("match.delete", insErr, { id, step: "reinsert_match_players" });
+      logError("match.delete", insErr, { id, step: "reinsert_match_players" });
       return { ok: false, error: insErr.message };
     }
   }
@@ -134,7 +134,7 @@ export async function deleteMatch(id: string, pin: string): Promise<DeleteMatchR
   );
   const upErr = updates.find((u) => u.error)?.error;
   if (upErr) {
-    await logError("match.delete", upErr, { id, step: "update_ratings" });
+    logError("match.delete", upErr, { id, step: "update_ratings" });
     return { ok: false, error: upErr.message };
   }
 
@@ -147,7 +147,7 @@ export async function deleteMatch(id: string, pin: string): Promise<DeleteMatchR
   );
   if (orphanIds.length) {
     const { error: orphErr } = await db.from("players").delete().in("id", orphanIds);
-    if (orphErr) await logError("match.delete", orphErr, { id, step: "delete_orphans" });
+    if (orphErr) logError("match.delete", orphErr, { id, step: "delete_orphans" });
   }
 
   revalidatePath("/");
