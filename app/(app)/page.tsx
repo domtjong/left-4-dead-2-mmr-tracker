@@ -21,9 +21,9 @@ export default async function Index() {
       "players",
       db.from("players").select("name, current_mmr"),
     ),
-    unwrap<{ id: string; map: string; played_at: string; win_score: number | null; lose_score: number | null; note: string | null }[]>(
+    unwrap<{ id: string; map: string; played_at: string; created_at: string; win_score: number | null; lose_score: number | null; note: string | null }[]>(
       "matches",
-      db.from("matches").select("id, map, played_at, win_score, lose_score, note"),
+      db.from("matches").select("id, map, played_at, created_at, win_score, lose_score, note"),
     ),
     fetchAllRows<{
       match_id: string;
@@ -156,9 +156,11 @@ export default async function Index() {
     .sort((a, b) => b.total - a.total)
     .map(({ map, best, worst }) => ({ map, best, worst }));
 
-  const byDateDesc = [...(matches ?? [])].sort((a, b) =>
-    (b.played_at as string).localeCompare(a.played_at as string),
-  );
+  const byDateDesc = [...(matches ?? [])].sort((a, b) => {
+    const d = (b.played_at as string).localeCompare(a.played_at as string);
+    // played_at is date-only; break same-day ties by real submit time.
+    return d !== 0 ? d : (b.created_at ?? "").localeCompare(a.created_at ?? "");
+  });
 
   // Six most recent matches, with full detail, for the Recent matches card.
   const sumArr = (xs: number[]) => xs.reduce((a, b) => a + b, 0);

@@ -81,6 +81,7 @@ export default function NewMatchForm({
   const [pin, setPin] = useState("");
   const [pending, setPending] = useState(false);
   const [result, setResult] = useState<LogMatchResult | null>(null);
+  const [confirming, setConfirming] = useState(false);
 
   const setName = (side: "w" | "l", i: number, v: string) => {
     const set = side === "w" ? setWinners : setLosers;
@@ -114,6 +115,7 @@ export default function NewMatchForm({
       setLoseScore("");
       setNote("");
       setPin("");
+      setConfirming(false);
       router.refresh();
     }
   }
@@ -124,6 +126,17 @@ export default function NewMatchForm({
   const chosen = new Set(
     [...winners, ...losers].map((n) => n.trim().toLowerCase()).filter(Boolean),
   );
+
+  // Score sanity check: in Versus the winner scores higher, so a winner score
+  // below the loser score is a strong sign the teams were entered swapped.
+  const winN = winScore.trim() ? Number(winScore) : null;
+  const loseN = loseScore.trim() ? Number(loseScore) : null;
+  const scoreSwapped =
+    winN !== null &&
+    loseN !== null &&
+    !Number.isNaN(winN) &&
+    !Number.isNaN(loseN) &&
+    winN < loseN;
 
   return (
     <Card className={cn(glassCard, "mx-auto max-w-2xl")}>
@@ -240,13 +253,69 @@ export default function NewMatchForm({
           />
         </label>
 
-        <Button
-          onClick={submit}
-          disabled={!ready || pending}
-          className="w-full bg-l4d2-purple text-white hover:bg-l4d2-violet"
-        >
-          {pending ? "Saving…" : "Log match & update MMR"}
-        </Button>
+        {/* Score sanity warning — catches teams entered in the wrong column. */}
+        {scoreSwapped && (
+          <p className="rounded-lg border border-amber-500/30 bg-amber-500/10 px-3 py-2 text-sm text-amber-300">
+            Winner score ({winN}) is below the loser score ({loseN}). Double-check the
+            winning team is in the <span className="font-semibold text-emerald-400">Winners</span>{" "}
+            column before logging.
+          </p>
+        )}
+
+        {!confirming ? (
+          <Button
+            onClick={() => {
+              setResult(null);
+              if (!scoreSwapped) setConfirming(true);
+            }}
+            disabled={!ready || pending}
+            className="w-full bg-l4d2-purple text-white hover:bg-l4d2-violet"
+          >
+            Review &amp; log match
+          </Button>
+        ) : (
+          // Confirm step: make who-gains / who-loses explicit before it hits MMR.
+          <div className="space-y-3 rounded-lg border border-white/10 bg-black/20 p-4">
+            <p className="text-xs uppercase tracking-widest text-white/50">
+              Confirm the result — this updates MMR
+            </p>
+            <div className="flex flex-col gap-2 sm:flex-row">
+              <div className="flex-1 rounded-md border border-emerald-500/25 bg-emerald-500/5 p-2.5">
+                <div className="text-[11px] font-semibold uppercase tracking-widest text-emerald-400">
+                  Winners · gain MMR
+                </div>
+                <div className="mt-1 text-sm text-white/80">
+                  {winners.map((n) => n.trim()).filter(Boolean).join(", ")}
+                </div>
+              </div>
+              <div className="flex-1 rounded-md border border-red-500/25 bg-red-500/5 p-2.5">
+                <div className="text-[11px] font-semibold uppercase tracking-widest text-red-400">
+                  Losers · lose MMR
+                </div>
+                <div className="mt-1 text-sm text-white/80">
+                  {losers.map((n) => n.trim()).filter(Boolean).join(", ")}
+                </div>
+              </div>
+            </div>
+            <div className="flex gap-2">
+              <button
+                type="button"
+                onClick={() => setConfirming(false)}
+                disabled={pending}
+                className="rounded-lg border border-white/15 px-4 py-2 text-sm text-white/70 transition hover:text-white disabled:opacity-50"
+              >
+                Back
+              </button>
+              <Button
+                onClick={submit}
+                disabled={pending}
+                className="flex-1 bg-l4d2-purple text-white hover:bg-l4d2-violet"
+              >
+                {pending ? "Saving…" : "Confirm & log match"}
+              </Button>
+            </div>
+          </div>
+        )}
 
         {result && !result.ok && (
           <p className="text-sm text-red-400">{result.error}</p>

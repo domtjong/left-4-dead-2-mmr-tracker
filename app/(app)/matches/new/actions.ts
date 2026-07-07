@@ -64,7 +64,7 @@ export async function logMatch(input: LogMatchInput): Promise<LogMatchResult> {
     .select("id, name, current_mmr")
     .in("name", all);
   if (pErr) {
-    logError("match.new", pErr, { step: "load_players" });
+    await logError("match.new", pErr, { step: "load_players" });
     return { ok: false, error: pErr.message };
   }
 
@@ -76,7 +76,7 @@ export async function logMatch(input: LogMatchInput): Promise<LogMatchResult> {
       .insert(unknown.map((name) => ({ name, current_mmr: BASE_MMR, is_guest: true })))
       .select("id, name, current_mmr");
     if (cErr) {
-      logError("match.new", cErr, { step: "create_guests", names: unknown });
+      await logError("match.new", cErr, { step: "create_guests", names: unknown });
       return { ok: false, error: cErr.message };
     }
     created?.forEach((p) => byName.set(p.name, p));
@@ -107,7 +107,7 @@ export async function logMatch(input: LogMatchInput): Promise<LogMatchResult> {
     .select("id")
     .single();
   if (mErr || !match) {
-    logError("match.new", mErr ?? "insert returned no row", { step: "insert_match" });
+    await logError("match.new", mErr ?? "insert returned no row", { step: "insert_match" });
     return { ok: false, error: mErr?.message ?? "Failed to create match." };
   }
 
@@ -122,7 +122,7 @@ export async function logMatch(input: LogMatchInput): Promise<LogMatchResult> {
     })),
   );
   if (mpErr) {
-    logError("match.new", mpErr, { step: "insert_match_players", matchId: match.id });
+    await logError("match.new", mpErr, { step: "insert_match_players", matchId: match.id });
     return { ok: false, error: mpErr.message };
   }
 
@@ -133,7 +133,7 @@ export async function logMatch(input: LogMatchInput): Promise<LogMatchResult> {
   );
   const updateErr = updates.find((u) => u.error)?.error;
   if (updateErr) {
-    logError("match.new", updateErr, { step: "update_ratings", matchId: match.id });
+    await logError("match.new", updateErr, { step: "update_ratings", matchId: match.id });
     return { ok: false, error: updateErr.message };
   }
 

@@ -23,7 +23,9 @@ export default async function MatchHistoryPage() {
       db
         .from("matches")
         .select("id, played_at, map, win_score, lose_score, note")
-        .order("played_at", { ascending: false }),
+        // played_at is date-only, so same-day games tie — break by submit time.
+        .order("played_at", { ascending: false })
+        .order("created_at", { ascending: false }),
     ),
     fetchAllRows<Mp>((from, to) =>
       db

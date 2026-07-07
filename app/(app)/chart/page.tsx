@@ -14,7 +14,12 @@ export default async function ChartPage() {
   const [matches, mps, players] = await Promise.all([
     unwrap<{ id: string; played_at: string }[]>(
       "matches",
-      db.from("matches").select("id, played_at").order("played_at", { ascending: true }),
+      db
+        .from("matches")
+        .select("id, played_at")
+        // Same-day games share a date-only played_at; order by submit time too.
+        .order("played_at", { ascending: true })
+        .order("created_at", { ascending: true }),
     ),
     fetchAllRows<Mp>((from, to) =>
       db.from("match_players").select("match_id, side, mmr_after, players(name)").order("id").range(from, to),
