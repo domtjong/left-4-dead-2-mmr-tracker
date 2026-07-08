@@ -23,6 +23,11 @@ export type LogMatchResult =
   | { ok: true; deltas: { name: string; before: number; after: number; delta: number }[] }
   | { ok: false; error: string };
 
+/** Check the daily PIN without submitting — used to gate the confirm step. */
+export async function verifyPin(pin: string): Promise<boolean> {
+  return isValidPin(pin);
+}
+
 export async function logMatch(input: LogMatchInput): Promise<LogMatchResult> {
   const winners = input.winners.map((n) => n.trim().toLowerCase());
   const losers = input.losers.map((n) => n.trim().toLowerCase());

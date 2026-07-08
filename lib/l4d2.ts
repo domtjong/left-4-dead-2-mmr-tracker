@@ -37,6 +37,32 @@ export const MAP_ACTS: Record<L4D2Map, number> = {
   "The Last Stand": 2,
 };
 
+/** Filename-safe slug for a map, e.g. "Dead Center" → "dead-center". Matches
+ *  the extracted campaign banners in public/maps/<slug>.jpg. */
+export function mapSlug(name: string): string {
+  return name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+}
+
+// Campaigns that have a Steam completion-achievement icon at
+// public/maps/ach/<slug>.jpg. Only Blood Harvest lacks one → banner fallback.
+const ACH_SLUGS = new Set([
+  "dead-center", "dark-carnival", "swamp-fever", "hard-rain", "the-parish",
+  "the-passing", "the-sacrifice", "no-mercy", "crash-course", "death-toll",
+  "dead-air", "cold-stream", "the-last-stand",
+]);
+
+/** Wide in-game campaign banner for a map. */
+export function mapBannerSrc(name: string): string {
+  return `/maps/${mapSlug(name)}.jpg`;
+}
+
+/** Square icon: the Steam completion-achievement icon when we have one, else
+ *  the wide banner (CSS crops it square). */
+export function mapIconSrc(name: string): string {
+  const s = mapSlug(name);
+  return ACH_SLUGS.has(s) ? `/maps/ach/${s}.jpg` : `/maps/${s}.jpg`;
+}
+
 export type MapLength = "any" | "short-medium" | "medium-long";
 
 /** Does a map's chapter count fall in the requested length bucket? */

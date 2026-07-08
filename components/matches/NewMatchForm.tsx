@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { cn, glassCard } from "@/lib/utils";
-import { logMatch, type LogMatchResult } from "@/app/(app)/matches/new/actions";
+import { logMatch, verifyPin, type LogMatchResult } from "@/app/(app)/matches/new/actions";
 
 const SLOTS = [0, 1, 2, 3] as const;
 
@@ -141,6 +141,21 @@ export default function NewMatchForm({
     !Number.isNaN(loseN) &&
     winN < loseN;
 
+  // Verify the PIN before showing the confirm card — otherwise a wrong PIN
+  // isn't caught until the final submit. (Final submit re-checks server-side.)
+  const beginReview = async () => {
+    setResult(null);
+    if (scoreSwapped) return;
+    setPending(true);
+    const okPin = await verifyPin(pin);
+    setPending(false);
+    if (!okPin) {
+      setResult({ ok: false, error: "Wrong PIN." });
+      return;
+    }
+    setConfirming(true);
+  };
+
   return (
     <Card className={cn(glassCard, "mx-auto max-w-2xl")}>
       <CardHeader>
@@ -267,14 +282,11 @@ export default function NewMatchForm({
 
         {!confirming ? (
           <Button
-            onClick={() => {
-              setResult(null);
-              if (!scoreSwapped) setConfirming(true);
-            }}
+            onClick={beginReview}
             disabled={!ready || pending}
             className="w-full bg-l4d2-purple text-white hover:bg-l4d2-violet"
           >
-            Review &amp; log match
+            {pending ? "Checking…" : "Review & log match"}
           </Button>
         ) : (
           // Confirm step: make who-gains / who-loses explicit before it hits MMR.

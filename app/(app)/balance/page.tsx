@@ -19,11 +19,11 @@ export default async function BalancePage() {
     ),
   ]);
 
-  // Most recent played date per map, and the maps of the last 3 matches (to
-  // exclude so a suggestion doesn't repeat what was just played).
+  // Most recent played date per map, and the maps of the last 5 matches (to
+  // exclude so a suggestion doesn't repeat what was recently played).
   const lastPlayed: Record<string, string> = {};
   for (const m of matches) if (!(m.map in lastPlayed)) lastPlayed[m.map] = m.played_at;
-  const recentMaps = matches.slice(0, 3).map((m) => m.map);
+  const recentMaps = matches.slice(0, 5).map((m) => m.map);
 
   const mapMeta = MAPS.map((name) => ({ name, acts: MAP_ACTS[name] }));
 

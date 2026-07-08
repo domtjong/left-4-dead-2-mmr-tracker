@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { ChevronDown, Search, X, Trash2 } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { cn, glassCard } from "@/lib/utils";
+import { mapBannerSrc } from "@/lib/l4d2";
 import { deleteMatch } from "@/app/(app)/matches/actions";
 
 export type HistoryPlayer = { name: string; delta: number };
@@ -100,7 +101,16 @@ function MatchRow({
           }}
         >
           <div className="min-h-0 overflow-hidden">
-            <div className="bg-black/20 px-4 py-4">
+            <div className="relative overflow-hidden bg-black/20">
+              {/* Campaign banner as the panel background. */}
+              <img
+                src={mapBannerSrc(m.map)}
+                alt=""
+                aria-hidden
+                className="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-20"
+              />
+              <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-l4d2-ink/92 via-l4d2-ink/85 to-l4d2-ink/70" />
+              <div className="relative px-4 py-4">
               {/* Match summary: score + pre-game win chance of each side */}
               <div className="mb-3 flex flex-wrap items-center gap-x-6 gap-y-1 text-xs">
                 {m.winScore !== null && m.loseScore !== null && (
@@ -153,6 +163,7 @@ function MatchRow({
                 >
                   <Trash2 size={13} /> Delete match
                 </button>
+              </div>
               </div>
             </div>
           </div>

@@ -2,9 +2,10 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { ChevronDown, Skull } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { cn, glassCard } from "@/lib/utils";
+import { mapBannerSrc, mapIconSrc } from "@/lib/l4d2";
 
 type SidePlayer = { name: string; delta: number };
 export type RecentMatch = {
@@ -90,16 +91,30 @@ export default function RecentMatches({ matches }: { matches: RecentMatch[] }) {
               <button
                 type="button"
                 onClick={() => setOpen(isOpen ? null : m.id)}
-                className="flex w-full items-center gap-3 py-3 text-left"
+                className="relative flex w-full items-center gap-3 overflow-hidden rounded-lg py-3 pr-2 text-left"
               >
-                <Skull size={15} className="shrink-0 text-white/40" />
-                <div className="min-w-0 flex-1">
+                {/* Faint wide campaign banner behind the row. */}
+                <img
+                  src={mapBannerSrc(m.map)}
+                  alt=""
+                  aria-hidden
+                  className="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-20"
+                />
+                <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-l4d2-ink via-l4d2-ink/80 to-transparent" />
+                {/* Square Steam completion-achievement icon (banner fallback). */}
+                <img
+                  src={mapIconSrc(m.map)}
+                  alt=""
+                  aria-hidden
+                  className="relative h-10 w-10 shrink-0 rounded-md object-cover ring-1 ring-white/10"
+                />
+                <div className="relative min-w-0 flex-1">
                   <div className="truncate text-sm font-medium text-white">{m.map}</div>
-                  <div className="text-[11px] text-white/40">{m.date}</div>
+                  <div className="text-[11px] text-white/50">{m.date}</div>
                 </div>
                 <ChevronDown
                   size={16}
-                  className={cn("text-white/40 transition", isOpen && "rotate-180")}
+                  className={cn("relative text-white/40 transition", isOpen && "rotate-180")}
                 />
               </button>
               <div
