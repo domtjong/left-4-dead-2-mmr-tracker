@@ -1,0 +1,6 @@
+interface:
+  display_name: "Left 4 Dead 2 Mmr Tracker"
+  short_description: "Repo-specific patterns and workflows for left-4-dead-2-mmr-tracker"
+  default_prompt: "Use the left-4-dead-2-mmr-tracker repo skill to follow existing architecture, testing, and workflow conventions."
+policy:
+  allow_implicit_invocation: true
