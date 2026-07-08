@@ -1,21 +1,20 @@
 "use client";
 
-import { Home, Table, FilePlus2, LineChart, Scale, Skull, type LucideIcon } from "lucide-react";
+import { Home, Table, FilePlus2, LineChart, Scale, type LucideIcon } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 
 type Item = { label: string; icon: LucideIcon; href: string; center?: boolean; soon?: boolean };
 
-// Instagram-style: add-a-game centered + raised, Gang on the far right.
-// Gang is dimmed — an upcoming feature (its page reads "coming soon").
+// Instagram-style: add-a-game centered + raised. Gang is a coming-soon feature,
+// hidden from the phone bar (still reachable from the desktop sidebar).
 const items: Item[] = [
   { label: "Home", icon: Home, href: "/" },
   { label: "History", icon: Table, href: "/matches" },
   { label: "New match", icon: FilePlus2, href: "/matches/new", center: true },
   { label: "Balance", icon: Scale, href: "/balance" },
   { label: "Chart", icon: LineChart, href: "/chart" },
-  { label: "Gang", icon: Skull, href: "/gangs", soon: true },
 ];
 
 export default function BottomNav() {

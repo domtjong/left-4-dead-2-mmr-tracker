@@ -4,6 +4,7 @@ import { useState } from "react";
 import { ChevronLeft, ChevronRight, Map as MapIcon } from "lucide-react";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { cn, glassCard, glassCardHover } from "@/lib/utils";
+import { mapBannerSrc } from "@/lib/l4d2";
 
 export type MapSlide = {
   map: string;
@@ -34,8 +35,18 @@ export default function MapCarousel({ slides }: { slides: MapSlide[] }) {
   const anim = dir === 1 ? "animate-slide-right" : "animate-slide-left";
 
   return (
-    <Card className={cn(glassCard, glassCardHover)}>
-      <CardHeader className="flex flex-row items-start justify-between space-y-0 pb-2">
+    <Card className={cn(glassCard, glassCardHover, "relative overflow-hidden")}>
+      {/* Current map's banner, fading in behind the card on each slide. */}
+      <div key={`bg-${i}`} className="animate-fade-in pointer-events-none absolute inset-0">
+        <img
+          src={mapBannerSrc(s.map)}
+          alt=""
+          aria-hidden
+          className="absolute inset-0 h-full w-full object-cover opacity-20"
+        />
+        <div className="absolute inset-0 bg-gradient-to-br from-l4d2-ink/92 via-l4d2-ink/88 to-l4d2-ink/70" />
+      </div>
+      <CardHeader className="relative flex flex-row items-start justify-between space-y-0 pb-2">
         <span className="text-xs font-medium uppercase tracking-widest text-white/50">
           Map spotlight
         </span>
@@ -43,7 +54,7 @@ export default function MapCarousel({ slides }: { slides: MapSlide[] }) {
           <MapIcon size={18} strokeWidth={2.25} />
         </span>
       </CardHeader>
-      <CardContent>
+      <CardContent className="relative">
         <div className="flex items-center justify-between gap-2">
           <button
             type="button"

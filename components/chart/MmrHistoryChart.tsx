@@ -5,13 +5,13 @@ import {
   CartesianGrid,
   Line,
   LineChart,
+  ReferenceLine,
   ResponsiveContainer,
   Tooltip,
   XAxis,
   YAxis,
 } from "recharts";
 import { Card, CardContent } from "@/components/ui/card";
-import PlayerMultiCombobox from "@/components/PlayerMultiCombobox";
 import { cn, glassCard } from "@/lib/utils";
 
 export type ChartRow = { idx: number; date: string; [player: string]: number | string };
@@ -78,7 +78,9 @@ export default function MmrHistoryChart({
     [played, selected],
   );
   const colorOf = (name: string) =>
-    PALETTE[active.findIndex((p) => p.name === name) % PALETTE.length];
+    name === "mevan"
+      ? "#000000"
+      : PALETTE[active.findIndex((p) => p.name === name) % PALETTE.length];
 
   // Carry each selected player's MMR forward across matches they sat out, so a
   // hovered point shows everyone's current rating — not just that match's
@@ -96,9 +98,9 @@ export default function MmrHistoryChart({
     });
   }, [rows, active]);
 
-  // Track the chart's rendered width so we can reserve a right-hand gutter and
-  // pin the (now tall) tooltip there instead of letting it cover the lines.
-  // Too narrow (phones) → skip the gutter and let the tooltip float normally.
+  // Track the chart's rendered width so the tooltip can be pinned just past the
+  // card's right edge (overspilling right) instead of covering the lines.
+  // Too narrow (phones) → let the tooltip float with the cursor instead.
   const wrapRef = useRef<HTMLDivElement>(null);
   const [width, setWidth] = useState(0);
   useEffect(() => {
@@ -109,20 +111,19 @@ export default function MmrHistoryChart({
     return () => ro.disconnect();
   }, []);
   const wide = width >= 640;
-  const gutter = wide ? 190 : 16; // reserved right space for the pinned tooltip
 
   return (
     <Card className={glassCard}>
       <CardContent className="space-y-5 pt-6">
-        {/* Searchable multi-select + "5+ matches" preset */}
-        <div className="space-y-2">
-          <div className="flex items-center justify-between gap-3">
+        {/* Per-player toggles + presets */}
+        <div className="space-y-3">
+          <div className="flex flex-wrap items-center gap-2">
             <button
               type="button"
               onClick={toggleRegulars}
               disabled={regularNames.length === 0}
               className={cn(
-                "shrink-0 rounded-full border px-3 py-1 text-xs font-medium transition disabled:opacity-40",
+                "rounded-full border px-3 py-1 text-xs font-medium transition disabled:opacity-40",
                 allRegularsSelected
                   ? "border-transparent bg-l4d2-purple text-white"
                   : "border-white/15 text-white/60 hover:border-white/30 hover:text-white",
@@ -130,22 +131,57 @@ export default function MmrHistoryChart({
             >
               5+ matches
             </button>
-            <span className="text-xs text-white/40">
+            <button
+              type="button"
+              onClick={() => setSelected(new Set())}
+              disabled={selected.size === 0}
+              className="rounded-full border border-white/15 px-3 py-1 text-xs font-medium text-white/60 transition hover:border-white/30 hover:text-white disabled:opacity-40"
+            >
+              Deselect all
+            </button>
+            <span className="ml-auto text-xs text-white/40">
               {active.length} of {played.length} shown
             </span>
           </div>
-          <PlayerMultiCombobox
-            options={played}
-            selected={selected}
-            onToggle={toggle}
-            onClear={() => setSelected(new Set())}
-          />
+          <div className="flex flex-wrap gap-2">
+            {played.map((p) => {
+              const on = selected.has(p.name);
+              return (
+                <button
+                  key={p.name}
+                  type="button"
+                  onClick={() => toggle(p.name)}
+                  className={cn(
+                    "rounded-full border px-3 py-1 text-xs font-medium transition",
+                    on
+                      ? "border-transparent bg-l4d2-purple text-white"
+                      : "border-white/15 text-white/60 hover:border-white/30 hover:text-white",
+                  )}
+                >
+                  {p.name}
+                </button>
+              );
+            })}
+          </div>
         </div>
 
         <div ref={wrapRef} className="h-[420px] w-full">
           <ResponsiveContainer width="100%" height="100%">
-            <LineChart data={filled} margin={{ top: 8, right: gutter, bottom: 8, left: -8 }}>
+            <LineChart data={filled} margin={{ top: 8, right: 16, bottom: 8, left: -8 }}>
               <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.06)" />
+              {/* Starting-MMR baseline. */}
+              <ReferenceLine
+                y={1000}
+                stroke="rgba(255,255,255,0.28)"
+                strokeDasharray="5 5"
+                ifOverflow="extendDomain"
+                label={{
+                  value: "base 1000",
+                  position: "insideBottomLeft",
+                  fill: "rgba(255,255,255,0.4)",
+                  fontSize: 10,
+                }}
+              />
               <XAxis
                 dataKey="idx"
                 tick={{ fill: "rgba(255,255,255,0.4)", fontSize: 11 }}
@@ -156,17 +192,23 @@ export default function MmrHistoryChart({
                 tick={{ fill: "rgba(255,255,255,0.4)", fontSize: 11 }}
                 tickLine={false}
                 axisLine={false}
-                domain={["dataMin - 40", "dataMax + 40"]}
+                // Keep the 1000 baseline in view even if everyone is above it.
+                domain={[
+                  (min: number) => Math.min(1000, Math.floor(min) - 40),
+                  (max: number) => Math.ceil(max) + 40,
+                ]}
                 width={48}
               />
               <Tooltip
                 // Order the rows by MMR at that match (highest first) so the
                 // tooltip matches the lines' top-to-bottom order on the chart.
                 itemSorter={(item) => -(item.value as number)}
-                // On wide screens, pin the tooltip in the reserved right gutter
-                // so it never covers the lines; otherwise let it follow the cursor.
-                position={wide ? { x: width - gutter + 6, y: 8 } : undefined}
+                // On wide screens, pin the tooltip just past the card's right
+                // edge so it overspills to the right instead of covering the
+                // lines (no reserved gutter). Phones keep the floating tooltip.
+                position={wide ? { x: width + 12, y: 8 } : undefined}
                 allowEscapeViewBox={{ x: true, y: true }}
+                wrapperStyle={{ zIndex: 20 }}
                 contentStyle={{
                   background: "rgba(15,15,18,0.95)",
                   border: "1px solid rgba(255,255,255,0.12)",

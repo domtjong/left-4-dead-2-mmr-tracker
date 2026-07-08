@@ -122,16 +122,29 @@ export default async function Index() {
         g: r.g,
         w: r.w,
         pct: Math.round((r.w / r.g) * 100),
-      }))
-      .sort((a, b) => b.pct - a.pct || b.g - a.g);
-    const best = list.slice(0, 3);
+      }));
+    const best = [...list].sort((a, b) => b.pct - a.pct || b.g - a.g).slice(0, 7);
     const bestKeys = new Set(best.map((c) => c.names.join(" ")));
+    // Worst: lowest win%, and among ties MORE games together = worse synergy.
     const worst = [...list]
-      .reverse()
       .filter((c) => !bestKeys.has(c.names.join(" ")))
-      .slice(0, 3);
+      .sort((a, b) => a.pct - b.pct || b.g - a.g)
+      .slice(0, 7);
     return { size: k, min, best, worst };
   });
+
+  // Every combo (min 1 game) per size, for the per-player synergy view — so a
+  // selected player's duos, trios and quads can all be shown. Plus the list of
+  // players to pick from.
+  const mkList = (m: Map<string, WL>) =>
+    [...m].map(([key, r]) => ({
+      names: key.split(" "),
+      g: r.g,
+      w: r.w,
+      pct: Math.round((r.w / r.g) * 100),
+    }));
+  const combos = { 2: mkList(comboStats[2]), 3: mkList(comboStats[3]), 4: mkList(comboStats[4]) };
+  const synergyPlayers = [...overall.keys()].sort();
 
   // Highest win rate among players with a meaningful sample.
   const MIN_OVERALL = 20;
@@ -266,7 +279,7 @@ export default async function Index() {
 
       {/* Squad synergy: best/worst duos, trios, quads */}
       <section className="mt-6">
-        <SquadSynergy squads={squads} />
+        <SquadSynergy squads={squads} combos={combos} players={synergyPlayers} />
       </section>
 
       {/* Matchup preview: MMR at stake before logging */}

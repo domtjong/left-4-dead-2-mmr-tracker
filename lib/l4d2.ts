@@ -56,6 +56,21 @@ export function mapBannerSrc(name: string): string {
   return `/maps/${mapSlug(name)}.jpg`;
 }
 
+// Campaigns with a titled banner PNG in public/maps/names/<slug>.png.
+// The Last Stand has none → plain banner fallback.
+const NAME_BANNER_SLUGS = new Set([
+  "dead-center", "dark-carnival", "swamp-fever", "hard-rain", "the-parish",
+  "the-passing", "the-sacrifice", "no-mercy", "crash-course", "death-toll",
+  "dead-air", "blood-harvest", "cold-stream",
+]);
+
+/** Titled campaign banner (with the map name on it) when available, else the
+ *  plain banner. */
+export function mapNameBannerSrc(name: string): string {
+  const s = mapSlug(name);
+  return NAME_BANNER_SLUGS.has(s) ? `/maps/names/${s}.png` : `/maps/${s}.jpg`;
+}
+
 /** Square icon: the Steam completion-achievement icon when we have one, else
  *  the wide banner (CSS crops it square). */
 export function mapIconSrc(name: string): string {

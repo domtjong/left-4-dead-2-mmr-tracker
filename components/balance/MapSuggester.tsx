@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import { MapPin, Shuffle } from "lucide-react";
+import { useRef, useState } from "react";
+import { Loader2, MapPin, Shuffle } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { cn, glassCard } from "@/lib/utils";
 import { mapSlug } from "@/lib/l4d2";
@@ -46,30 +46,49 @@ export default function MapSuggester({
   // Which chapter counts we feel like playing (default: none = any).
   const [acts, setActs] = useState<Set<number>>(() => new Set());
   const [pick, setPick] = useState<MapMeta | null>(null);
+  const [rolling, setRolling] = useState(false);
+  const rollTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   // Rotate + diversify: among maps whose chapter count is selected and that
-  // weren't in the last 3 games, take the least-recently-played few and pick
+  // weren't in the last 5 games, take the least-recently-played few and pick
   // one at random (avoiding an immediate repeat).
-  const suggest = (want: Set<number>, avoid?: string) => {
+  const pickMap = (want: Set<number>, avoid?: string): MapMeta | null => {
     const allow = want.size ? want : new Set(allActs); // none picked → any
     const eligible = maps
       .filter((m) => allow.has(m.acts) && !recentMaps.includes(m.name))
       .sort((a, b) => staleness(a.name, lastPlayed) - staleness(b.name, lastPlayed));
-    if (eligible.length === 0) {
-      setPick(null);
-      return;
-    }
+    if (eligible.length === 0) return null;
     const stalest = eligible.slice(0, Math.min(3, eligible.length));
     const pool = stalest.filter((m) => m.name !== avoid);
     const from = pool.length ? pool : stalest;
-    setPick(from[Math.floor(Math.random() * from.length)]);
+    return from[Math.floor(Math.random() * from.length)];
+  };
+
+  // Brief spin before revealing, so a reroll feels like an actual roll.
+  const suggest = (want: Set<number>, avoid?: string) => {
+    const chosen = pickMap(want, avoid);
+    if (rollTimer.current) clearTimeout(rollTimer.current);
+    if (!chosen) {
+      setRolling(false);
+      setPick(null);
+      return;
+    }
+    setRolling(true);
+    rollTimer.current = setTimeout(() => {
+      setPick(chosen);
+      setRolling(false);
+    }, 450);
   };
 
   const toggleAct = (n: number) => {
     const next = new Set(acts);
     next.has(n) ? next.delete(n) : next.add(n);
     setActs(next);
-    suggest(next); // re-roll under the new selection
+    // Clear the current pick so the Roll button returns — feels like a fresh
+    // roll every time the length selection changes.
+    if (rollTimer.current) clearTimeout(rollTimer.current);
+    setRolling(false);
+    setPick(null);
   };
 
   return (
@@ -112,33 +131,38 @@ export default function MapSuggester({
         </div>
 
         {/* Result */}
-        {pick ? (
-          <div className="relative overflow-hidden rounded-xl border border-white/10">
-            {/* In-game campaign banner behind the result. */}
+        {rolling ? (
+          <div className="flex min-h-[190px] items-center justify-center rounded-xl border border-white/10 bg-black/30">
+            <div className="flex flex-col items-center gap-2 text-white/60">
+              <Loader2 size={28} className="animate-spin" />
+              <span className="text-xs font-medium uppercase tracking-widest">Rolling…</span>
+            </div>
+          </div>
+        ) : pick ? (
+          <div className="relative min-h-[190px] overflow-hidden rounded-xl border border-white/10">
+            {/* In-game campaign banner — taller so more of it shows. */}
             <img
               src={`/maps/${mapSlug(pick.name)}.jpg`}
               alt=""
               aria-hidden
               className="absolute inset-0 h-full w-full object-cover"
             />
-            <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/70 to-black/45" />
-            <div className="relative flex items-center justify-between gap-4 p-4">
-              <div className="min-w-0">
-                <div className="truncate font-display text-xl font-bold text-white drop-shadow">
-                  {pick.name}
-                </div>
-                <div className="mt-0.5 text-xs text-white/60">
-                  {pick.acts} chapters · {tier(pick.acts)} · {lastPlayedLabel(lastPlayed[pick.name])}
-                </div>
+            <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/10" />
+            <button
+              type="button"
+              onClick={() => suggest(acts, pick.name)}
+              className="absolute right-2 top-2 z-10 flex items-center gap-2 rounded-full border border-white/25 bg-black/50 px-3 py-1 text-xs font-semibold text-white backdrop-blur transition hover:bg-black/70"
+            >
+              <Shuffle size={14} />
+              Reroll
+            </button>
+            <div className="absolute inset-x-0 bottom-0 p-4">
+              <div className="truncate font-display text-xl font-bold text-white drop-shadow">
+                {pick.name}
               </div>
-              <button
-                type="button"
-                onClick={() => suggest(acts, pick.name)}
-                className="flex shrink-0 items-center gap-2 rounded-full border border-white/25 bg-black/40 px-4 py-1.5 text-xs font-semibold text-white backdrop-blur transition hover:bg-black/60"
-              >
-                <Shuffle size={14} />
-                Reroll
-              </button>
+              <div className="mt-0.5 text-xs text-white/70 drop-shadow">
+                {pick.acts} chapters · {tier(pick.acts)} · {lastPlayedLabel(lastPlayed[pick.name])}
+              </div>
             </div>
           </div>
         ) : (

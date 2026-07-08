@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { ChevronDown, Search, X, Trash2 } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { cn, glassCard } from "@/lib/utils";
-import { mapBannerSrc } from "@/lib/l4d2";
+import { mapNameBannerSrc } from "@/lib/l4d2";
 import { deleteMatch } from "@/app/(app)/matches/actions";
 
 export type HistoryPlayer = { name: string; delta: number };
@@ -26,20 +26,44 @@ export type HistoryMatch = {
   note: string | null;
 };
 
-function Team({ players, won }: { players: HistoryPlayer[]; won: boolean }) {
+const isHit = (name: string, q?: string) => !!q && name.toLowerCase().includes(q);
+
+function Team({
+  players,
+  won,
+  highlight,
+}: {
+  players: HistoryPlayer[];
+  won: boolean;
+  highlight?: string;
+}) {
   return (
     <span className={cn("truncate", won ? "text-emerald-400" : "text-red-400")}>
-      {players.map((p) => p.name).join(", ")}
+      {players.map((p, i) => (
+        <span key={p.name}>
+          {i > 0 && ", "}
+          <span className={isHit(p.name, highlight) ? "rounded bg-white/20 px-1 font-bold text-white" : undefined}>
+            {p.name}
+          </span>
+        </span>
+      ))}
     </span>
   );
 }
 
-function DeltaRows({ players }: { players: HistoryPlayer[] }) {
+function DeltaRows({ players, highlight }: { players: HistoryPlayer[]; highlight?: string }) {
   return (
     <div className="space-y-1">
       {players.map((p) => (
         <div key={p.name} className="flex items-center justify-between gap-4 text-sm">
-          <span className="text-white/70">{p.name}</span>
+          <span
+            className={cn(
+              "text-white/70",
+              isHit(p.name, highlight) && "rounded bg-white/20 px-1 font-semibold text-white",
+            )}
+          >
+            {p.name}
+          </span>
           <span className={p.delta >= 0 ? "text-emerald-400" : "text-red-400"}>
             {p.delta >= 0 ? "+" : ""}
             {p.delta}
@@ -58,9 +82,11 @@ function DeltaRows({ players }: { players: HistoryPlayer[] }) {
 function MatchRow({
   m,
   onRequestDelete,
+  highlight,
 }: {
   m: HistoryMatch;
   onRequestDelete: (id: string) => void;
+  highlight?: string;
 }) {
   const [phase, setPhase] = useState<"closed" | "open" | "closing">("closed");
   const mounted = phase !== "closed";
@@ -75,9 +101,9 @@ function MatchRow({
       >
         <span className="text-xs tabular-nums text-white/40">{m.date}</span>
         <span className="flex items-center gap-2 truncate text-sm">
-          <Team players={m.winners} won />
+          <Team players={m.winners} won highlight={highlight} />
           <span className="text-white/25">vs</span>
-          <Team players={m.losers} won={false} />
+          <Team players={m.losers} won={false} highlight={highlight} />
         </span>
         <span className="flex items-center gap-3">
           <span className="hidden text-xs uppercase tracking-wide text-white/40 sm:inline">
@@ -102,9 +128,9 @@ function MatchRow({
         >
           <div className="min-h-0 overflow-hidden">
             <div className="relative overflow-hidden bg-black/20">
-              {/* Campaign banner as the panel background. */}
+              {/* Titled campaign banner as the panel background. */}
               <img
-                src={mapBannerSrc(m.map)}
+                src={mapNameBannerSrc(m.map)}
                 alt=""
                 aria-hidden
                 className="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-20"
@@ -140,7 +166,7 @@ function MatchRow({
                       total {m.winnerMmr} · avg {m.winnerAvg}
                     </span>
                   </div>
-                  <DeltaRows players={m.winners} />
+                  <DeltaRows players={m.winners} highlight={highlight} />
                 </div>
                 <div>
                   <div className="mb-2 flex items-baseline justify-between">
@@ -151,7 +177,7 @@ function MatchRow({
                       total {m.loserMmr} · avg {m.loserAvg}
                     </span>
                   </div>
-                  <DeltaRows players={m.losers} />
+                  <DeltaRows players={m.losers} highlight={highlight} />
                 </div>
               </div>
               <div className="mt-3 flex items-center justify-between gap-3">
@@ -290,6 +316,7 @@ export default function MatchHistory({ matches }: { matches: HistoryMatch[] }) {
               setPin("");
               setConfirmId(id);
             }}
+            highlight={q}
           />
         ))}
 
