@@ -6,6 +6,7 @@
     "start": "next start",
     "test": "vitest run",
     "test:watch": "vitest",
+    "typecheck": "tsc --noEmit",
     "import": "tsx scripts/import-matches.ts"
   },
   "dependencies": {

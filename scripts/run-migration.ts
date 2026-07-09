@@ -51,7 +51,8 @@ async function tryConnect(host: string): Promise<Client | null> {
     user: `postgres.${ref}`,
     password,
     database: "postgres",
-    ssl: { rejectUnauthorized: false },
+    // Verify TLS — this connection carries the DB password.
+    ssl: { rejectUnauthorized: true },
     connectionTimeoutMillis: 8000,
   });
   try {

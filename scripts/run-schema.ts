@@ -28,7 +28,9 @@ if (!conn) {
 
 const sql = readFileSync(join(repoRoot, "supabase/schema.sql"), "utf-8");
 
-const client = new Client({ connectionString: conn, ssl: { rejectUnauthorized: false } });
+// Verify the server certificate (Supabase's cert is publicly trusted). These
+// connections carry the DB password, so don't disable TLS verification.
+const client = new Client({ connectionString: conn, ssl: { rejectUnauthorized: true } });
 const run = async () => {
   await client.connect();
   await client.query(sql);

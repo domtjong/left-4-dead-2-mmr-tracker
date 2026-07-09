@@ -88,6 +88,29 @@ export async function logMatch(input: LogMatchInput): Promise<LogMatchResult> {
 
   const db = createAdminClient();
 
+  // Reject backdating. Deltas are appended using the CURRENT ratings, but the
+  // canonical replay order is by played_at — a match dated before the latest
+  // game would silently diverge the stored history until the next full replay
+  // rewrote unrelated games. (Proper backdated-replay support is a separate,
+  // tested change.)
+  if (input.playedAt) {
+    const { data: latest } = await db
+      .from("matches")
+      .select("played_at")
+      .order("played_at", { ascending: false })
+      .limit(1)
+      .maybeSingle();
+    const newDay = input.playedAt.slice(0, 10);
+    const latestDay = latest ? (latest.played_at as string).slice(0, 10) : null;
+    if (latestDay && newDay < latestDay) {
+      logEvent("match.new.rejected", { reason: "backdated", newDay, latestDay });
+      return {
+        ok: false,
+        error: `Can't log a match dated ${newDay} — it's before the latest game (${latestDay}). Log games in order.`,
+      };
+    }
+  }
+
   // --- resolve players, creating guests at base MMR for unknown names ---
   const { data: existing, error: pErr } = await db
     .from("players")
