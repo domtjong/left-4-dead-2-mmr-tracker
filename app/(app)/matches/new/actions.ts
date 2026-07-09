@@ -1,7 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { createClient } from "@/utils/supabase/server";
+import { createAdminClient } from "@/utils/supabase/admin";
 import { applyMatch, BASE_MMR, type PlayerRating } from "@/lib/mmr";
 import { MAPS } from "@/lib/l4d2";
 import { logEvent, logError } from "@/lib/log";
@@ -68,7 +68,7 @@ export async function logMatch(input: LogMatchInput): Promise<LogMatchResult> {
     return { ok: false, error: "Sign your name to confirm the match." };
   }
 
-  const db = await createClient();
+  const db = createAdminClient();
 
   // --- resolve players, creating guests at base MMR for unknown names ---
   const { data: existing, error: pErr } = await db

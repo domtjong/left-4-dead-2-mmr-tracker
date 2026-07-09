@@ -1,7 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { createClient } from "@/utils/supabase/server";
+import { createAdminClient } from "@/utils/supabase/admin";
 import { applyMatch, BASE_MMR, type PlayerRating, type Side } from "@/lib/mmr";
 import { fetchAllRows } from "@/lib/db";
 import { logEvent, logError } from "@/lib/log";
@@ -24,7 +24,7 @@ export async function deleteMatch(id: string, pin: string): Promise<DeleteMatchR
     return { ok: false, error: "Wrong PIN." };
   }
 
-  const db = await createClient();
+  const db = createAdminClient();
 
   // Capture what we're deleting so the log shows the match, not just an id.
   const { data: doomed } = await db
@@ -55,23 +55,28 @@ export async function deleteMatch(id: string, pin: string): Promise<DeleteMatchR
     return { ok: false, error: delErr.message };
   }
 
-  // 2. Load everything needed to replay the remaining log.
-  const [matchesRes, mps, playersRes] = await Promise.all([
-    db
-      .from("matches")
-      .select("id, winning_side, played_at, created_at")
-      .order("played_at", { ascending: true })
-      .order("created_at", { ascending: true })
-      .order("id", { ascending: true }),
+  // 2. Load everything needed to replay the remaining log. Both matches and
+  // match_players page past PostgREST's 1000-row cap — without paging the
+  // matches load, a replay beyond 1000 games would drop the tail while the
+  // step-4 wipe still clears every roster row (permanent history loss).
+  const [matches, mps, playersRes] = await Promise.all([
+    fetchAllRows<{ id: string; winning_side: string; played_at: string; created_at: string }>(
+      (from, to) =>
+        db
+          .from("matches")
+          .select("id, winning_side, played_at, created_at")
+          .order("played_at", { ascending: true })
+          .order("created_at", { ascending: true })
+          .order("id", { ascending: true })
+          .range(from, to),
+    ),
     fetchAllRows<{ match_id: string; player_id: string; side: string }>((from, to) =>
       db.from("match_players").select("match_id, player_id, side").order("id").range(from, to),
     ),
     db.from("players").select("id"),
   ]);
-  if (matchesRes.error) return { ok: false, error: matchesRes.error.message };
   if (playersRes.error) return { ok: false, error: playersRes.error.message };
 
-  const matches = matchesRes.data ?? [];
   const players = playersRes.data ?? [];
 
   // Roster (player ids per side) for each remaining match.
