@@ -118,18 +118,20 @@ export async function deleteMatch(id: string, pin: string): Promise<DeleteMatchR
     }
   }
 
-  // 4. Replace all match_players with the recomputed rows.
-  const { error: wipeErr } = await db.from("match_players").delete().not("id", "is", null);
-  if (wipeErr) {
-    logError("match.delete", wipeErr, { id, step: "wipe_match_players" });
-    return { ok: false, error: wipeErr.message };
-  }
-
+  // 4. Upsert the recomputed rows in place. The deleted match's rows are already
+  // gone (ON DELETE CASCADE from step 1) and no other match changes its player
+  // set, so every remaining row just gets new mmr values. Upserting on the
+  // (match_id, player_id) unique key — instead of wiping the whole table and
+  // reinserting — means no match is ever left with an empty roster mid-rebuild,
+  // which is what previously turned an interrupted/concurrent delete into a
+  // rosterless "ghost" match.
   for (let j = 0; j < newRows.length; j += 500) {
-    const { error: insErr } = await db.from("match_players").insert(newRows.slice(j, j + 500));
-    if (insErr) {
-      logError("match.delete", insErr, { id, step: "reinsert_match_players" });
-      return { ok: false, error: insErr.message };
+    const { error: upsertErr } = await db
+      .from("match_players")
+      .upsert(newRows.slice(j, j + 500), { onConflict: "match_id,player_id" });
+    if (upsertErr) {
+      logError("match.delete", upsertErr, { id, step: "upsert_match_players" });
+      return { ok: false, error: upsertErr.message };
     }
   }
 

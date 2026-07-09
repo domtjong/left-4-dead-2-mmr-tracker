@@ -67,6 +67,24 @@ export async function logMatch(input: LogMatchInput): Promise<LogMatchResult> {
     logEvent("match.new.rejected", { reason: "missing_entered_by" });
     return { ok: false, error: "Sign your name to confirm the match." };
   }
+  // Scores are display-only but still validated server-side — the form's
+  // score-swap warning is client-only and bypassable.
+  const ws = input.winScore ?? null;
+  const ls = input.loseScore ?? null;
+  for (const [label, v] of [["winScore", ws], ["loseScore", ls]] as const) {
+    if (v !== null && (!Number.isInteger(v) || v < 0)) {
+      logEvent("match.new.rejected", { reason: "bad_score", label, value: v });
+      return { ok: false, error: "Scores must be whole, non-negative numbers." };
+    }
+  }
+  if (ws !== null && ls !== null && ws < ls) {
+    logEvent("match.new.rejected", { reason: "score_swapped", ws, ls });
+    return { ok: false, error: "Winner score is below loser score — teams may be swapped." };
+  }
+  if (input.playedAt !== undefined && Number.isNaN(Date.parse(input.playedAt))) {
+    logEvent("match.new.rejected", { reason: "bad_played_at", playedAt: input.playedAt });
+    return { ok: false, error: "Invalid match date." };
+  }
 
   const db = createAdminClient();
 
