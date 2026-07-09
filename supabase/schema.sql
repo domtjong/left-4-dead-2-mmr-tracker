@@ -2,7 +2,7 @@
 -- Run in Supabase Dashboard → SQL Editor. Keep this file as the source of truth.
 -- See PROJECT.md §4 (Elo) and §9 (schema).
 --
--- Constants (mirrored in code lib/mmr.ts): BASE_MMR = 1000, K_FACTOR = 32.
+-- Constants (mirrored in code lib/mmr.ts): BASE_MMR = 1000, K_FACTOR = 64.
 --
 -- RLS NOTE: RLS is intentionally OFF for the MVP (private group).
 -- With RLS off, anyone holding the project URL + anon key can read/write these
@@ -25,7 +25,9 @@ create table if not exists players (
 create table if not exists matches (
   id            uuid primary key default gen_random_uuid(),
   map           text        not null,
-  winning_side  text        not null check (winning_side in ('A', 'B')),
+  -- Winners are always stored as side A (form, import, and replay all write 'A',
+  -- and every read path assumes it), so the constraint enforces that invariant.
+  winning_side  text        not null check (winning_side = 'A'),
   played_at     timestamptz not null default now(),
   created_at    timestamptz not null default now(),
   win_score     integer,     -- winning team's round score (display only, not in MMR)

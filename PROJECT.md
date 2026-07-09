@@ -19,7 +19,7 @@ Core loop: someone logs a match → each player's MMR updates → the group can 
 MVP is functionally complete and being deployed to Vercel. Highlights:
 
 **Done**
-- **Team Elo engine** (`lib/mmr.ts`) — base 1000, K 32, team-average expected score, symmetric. 14 passing unit tests (`lib/mmr.test.ts`).
+- **Team Elo engine** (`lib/mmr.ts`) — base 1000, K 64, team-average expected score, symmetric. 14 passing unit tests (`lib/mmr.test.ts`).
 - **Historical import** — the old spreadsheet (`l4d2csv.xlsx`) is cleaned and imported: **24 players, 168 matches**, first counted game **2021-05-19**. Exclusions applied: pre-cutoff games, `x`-marked voids (incl. duplicate tjong1/pratik1), custom/non-official maps, duplicate-player games. Scripts: `scripts/import-matches.ts`, cleaning in a Python pass.
 - **New Match form** (`/matches/new`) — 4v4, guest-adds at base MMR, map, date, **round scores + free-text note** (scores stored for display, not used in MMR), runs Elo and persists on save.
 - **MMR chart** (`/chart`) — multi-player line chart over match history + standings.
@@ -80,7 +80,7 @@ This is ad hoc, not symmetric, and hard to reason about. We're moving to **stand
 ### Recommended Elo (default constants)
 
 - **Base rating:** `1000` — everyone (and every new guest) starts here. Matches the "everyone started from the same number" history.
-- **K-factor:** `32` (standard). Higher = ratings move faster; lower = more stable. Tunable in one constant.
+- **K-factor:** `64` (double the standard 32, so ratings move faster on a small match log). Higher = ratings move faster; lower = more stable. Tunable in one constant.
 - **Team rating** = average of the 4 players' current MMR on that side.
 - **Expected score** for a side:
   ```
@@ -170,13 +170,13 @@ mmr_after     integer not null
 delta         integer not null
 ```
 
-Constants live in one place in code (e.g. `lib/mmr.ts`): `BASE_MMR = 1000`, `K_FACTOR = 32`.
+Constants live in one place in code (e.g. `lib/mmr.ts`): `BASE_MMR = 1000`, `K_FACTOR = 64`.
 
 ---
 
 ## 10. Open questions / future
 
-- Confirm base rating (`1000`) and K-factor (`32`) — change before real data piles up.
+- Confirm base rating (`1000`) and K-factor (`64`) — change before real data piles up.
 - Auth + team model: one global team for now; multi-team later? (affects RLS design).
 - Score differential: add margin-of-victory multiplier later, then recompute.
 - Spreadsheet import: get format, write importer.

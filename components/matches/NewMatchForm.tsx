@@ -74,7 +74,15 @@ export default function NewMatchForm({
   const [winners, setWinners] = useState(["", "", "", ""]);
   const [losers, setLosers] = useState(["", "", "", ""]);
   const [map, setMap] = useState("");
-  const [playedAt, setPlayedAt] = useState(() => new Date().toISOString().slice(0, 10));
+  // Local date, not toISOString().slice(0, 10): the UTC date is yesterday for
+  // anyone east of UTC (e.g. AEST) before ~10am, which silently backdated
+  // morning-after entries and reshuffled same-day replay order.
+  const [playedAt, setPlayedAt] = useState(() => {
+    const d = new Date();
+    return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(
+      d.getDate(),
+    ).padStart(2, "0")}`;
+  });
   const [winScore, setWinScore] = useState("");
   const [loseScore, setLoseScore] = useState("");
   const [note, setNote] = useState("");
